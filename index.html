@@ -105,6 +105,7 @@ input:focus { outline: none; border-color: #58a6ff; }
   <button onclick="document.getElementById('iosGuide').style.display='none'" style="margin-top:12px;background:none;border:1px solid #30363d;color:#8b949e;padding:5px 12px;border-radius:6px;font-size:12px;cursor:pointer">닫기</button>
 </div>
 
+<div id="toastMsg" style="display:none;position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#4ade80;color:#0d1117;padding:10px 24px;border-radius:20px;font-size:14px;font-weight:700;z-index:999;transition:opacity 0.4s">✅ 저장완료!</div>
 <div class="tabs">
   <button class="tab active" onclick="showTab('record')">📝 기록</button>
   <button class="tab" onclick="showTab('history')">📋 이력</button>
@@ -14293,7 +14294,10 @@ function saveRecord() {
   document.getElementById("matchedBox").style.display="none";
   document.getElementById("saveBtn").disabled=true;
   matchedItem=null;hideWarning();renderRecent();renderRecommend();
-  alert("✅ 저장되었습니다!");
+  const toast=document.getElementById("toastMsg");
+  toast.style.display="block";toast.style.opacity="1";
+  setTimeout(()=>{toast.style.opacity="0";setTimeout(()=>{toast.style.display="none";},400);},1500);
+  document.getElementById("nameInput").focus();
 }
 
 function openEdit(id) {
