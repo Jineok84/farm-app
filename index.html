@@ -1,4 +1,3 @@
-cat > /mnt/user-data/outputs/index.html << 'EOF'
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,72 +7,67 @@ cat > /mnt/user-data/outputs/index.html << 'EOF'
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="농약관리">
-<link rel="manifest" href="manifest.json">
-<title>농약 기작 관리</title>
+<title>농약 기작 관리 - 참외</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: #0d1117; color: #e6edf3; font-family: 'Noto Sans KR', sans-serif; max-width: 500px; margin: 0 auto; padding-bottom: 80px; }
 input, button { font-family: inherit; }
-.header { background: linear-gradient(135deg,#1a2332,#0d1117); border-bottom: 1px solid #21262d; padding: 20px 16px 14px; }
+.header { background: linear-gradient(135deg,#1a2332,#0d1117); border-bottom: 1px solid #21262d; padding: 16px; }
 .header-sub { font-size: 10px; color: #58a6ff; letter-spacing: 3px; margin-bottom: 4px; }
-.header-title { font-size: 21px; font-weight: 700; }
-.install-banner { background: linear-gradient(135deg,#1a3a1a,#0d1117); border: 1px solid #4ade80; border-radius: 10px; margin: 12px 16px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; }
-.install-text { font-size: 13px; color: #4ade80; font-weight: 600; }
-.install-sub { font-size: 11px; color: #8b949e; margin-top: 2px; }
-.install-btn { background: #4ade80; color: #0d1117; border: none; border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 700; cursor: pointer; flex-shrink: 0; margin-left: 10px; }
+.header-title { font-size: 20px; font-weight: 700; }
+.header-desc { font-size: 11px; color: #8b949e; margin-top: 4px; }
+.install-banner { background: linear-gradient(135deg,#1a3a1a,#0d2010); border: 1px solid #4ade80; border-radius: 10px; margin: 12px 16px; padding: 10px 14px; display: none; justify-content: space-between; align-items: center; }
+.install-btn { background: #4ade80; color: #0d1117; border: none; border-radius: 8px; padding: 7px 14px; font-size: 13px; font-weight: 700; cursor: pointer; flex-shrink: 0; margin-left: 10px; }
 .ios-guide { background: #1a2332; border: 1px solid #58a6ff; border-radius: 10px; margin: 0 16px 12px; padding: 12px 14px; display: none; }
-.ios-guide-title { font-size: 13px; font-weight: 700; color: #58a6ff; margin-bottom: 8px; }
-.ios-step { font-size: 12px; color: #8b949e; margin-bottom: 5px; display: flex; gap: 6px; }
 .tabs { display: flex; background: #161b22; border-bottom: 1px solid #21262d; }
-.tab { flex: 1; padding: 12px 0; background: transparent; color: #8b949e; border: none; border-bottom: 2px solid transparent; font-size: 13px; font-weight: 600; cursor: pointer; }
+.tab { flex: 1; padding: 11px 0; background: transparent; color: #8b949e; border: none; border-bottom: 2px solid transparent; font-size: 13px; font-weight: 600; cursor: pointer; }
 .tab.active { background: #21262d; color: #58a6ff; border-bottom: 2px solid #58a6ff; }
-.page { display: none; padding: 16px; }
+.page { display: none; padding: 14px; }
 .page.active { display: block; }
-.card { background: #161b22; border: 1px solid #21262d; border-radius: 12px; padding: 16px; margin-bottom: 14px; }
-.label { font-size: 12px; color: #8b949e; font-weight: 600; margin-bottom: 6px; margin-top: 14px; }
+.card { background: #161b22; border: 1px solid #21262d; border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.label { font-size: 12px; color: #8b949e; font-weight: 600; margin-bottom: 6px; margin-top: 12px; }
 .label:first-child { margin-top: 0; }
-.crop-btns { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 4px; }
-.crop-btn { padding: 6px 12px; border-radius: 20px; border: 1px solid #30363d; background: transparent; color: #8b949e; font-size: 13px; cursor: pointer; }
+.crop-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+.crop-btn { padding: 5px 11px; border-radius: 20px; border: 1px solid #30363d; background: transparent; color: #8b949e; font-size: 13px; cursor: pointer; }
 .crop-btn.active { border-color: #58a6ff; background: #1f3a5f; color: #58a6ff; }
-input[type=text], input[type=date], input[type=password] { width: 100%; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 10px 12px; color: #e6edf3; font-size: 14px; margin-bottom: 4px; }
+input[type=text], input[type=date] { width: 100%; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 9px 12px; color: #e6edf3; font-size: 14px; }
 input:focus { outline: none; border-color: #58a6ff; }
-.pos-rel { position: relative; margin-bottom: 4px; }
-.suggest-box { position: absolute; top: 100%; left: 0; right: 0; background: #1c2128; border: 1px solid #30363d; border-radius: 8px; z-index: 10; max-height: 280px; overflow-y: auto; }
+.pos-rel { position: relative; }
+.suggest-box { position: absolute; top: 100%; left: 0; right: 0; background: #1c2128; border: 1px solid #30363d; border-radius: 8px; z-index: 10; max-height: 300px; overflow-y: auto; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
 .suggest-item { padding: 10px 12px; cursor: pointer; border-bottom: 1px solid #21262d; }
-.suggest-item:hover { background: #21262d; }
+.suggest-item:active { background: #21262d; }
 .suggest-name { font-size: 14px; font-weight: 600; }
 .suggest-sub { font-size: 11px; color: #8b949e; margin-top: 2px; }
-.suggest-code { font-size: 11px; color: #58a6ff; background: #1a2332; padding: 2px 7px; border-radius: 8px; float: right; }
-.matched-box { background: #1a2332; border: 1px solid #21262d; border-radius: 8px; padding: 10px 12px; margin-bottom: 4px; display: flex; gap: 16px; flex-wrap: wrap; }
+.suggest-code { font-size: 11px; color: #58a6ff; background: #1a2332; padding: 2px 7px; border-radius: 8px; float: right; margin-left: 6px; }
+.suggest-date { font-size: 10px; color: #4ade80; }
+.suggest-new { font-size: 10px; color: #f59e0b; font-weight: 700; }
+.matched-box { background: #1a2332; border: 1px solid #21262d; border-radius: 8px; padding: 10px 12px; margin-top: 8px; display: flex; gap: 14px; flex-wrap: wrap; }
 .tag { display: flex; flex-direction: column; gap: 2px; }
 .tag-label { font-size: 10px; color: #8b949e; }
 .tag-value { font-size: 12px; font-weight: 700; }
-.btn-save { width: 100%; padding: 13px; background: linear-gradient(135deg,#1d4ed8,#2563eb); color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+.btn-save { width: 100%; padding: 12px; background: linear-gradient(135deg,#1d4ed8,#2563eb); color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 12px; }
 .btn-save:disabled { background: #21262d; color: #6e7681; cursor: default; }
-.warning { background: linear-gradient(135deg,#3d1a1a,#2d1010); border: 1px solid #f87171; border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; display: flex; gap: 10px; }
-.warning-icon { font-size: 22px; }
+.warning { background: linear-gradient(135deg,#3d1a1a,#2d1010); border: 1px solid #f87171; border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; display: flex; gap: 10px; }
+.warning-icon { font-size: 20px; }
 .warning-title { color: #f87171; font-weight: 700; font-size: 14px; }
 .warning-text { color: #fca5a5; font-size: 12px; margin-top: 2px; }
-.api-box { margin: 8px 16px; background: #0f2a1a; border: 1px solid #4ade80; border-radius: 8px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; }
-.api-setup { margin: 16px; background: #161b22; border: 1px solid #f59e0b; border-radius: 12px; padding: 14px; }
-.btn-api { width: 100%; padding: 10px; background: linear-gradient(135deg,#b45309,#d97706); color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 8px; }
-.btn-change { font-size: 11px; color: #8b949e; background: none; border: none; cursor: pointer; }
-.record-card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 10px 12px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.record-card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 10px 12px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
 .record-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
 .record-sub { font-size: 11px; color: #8b949e; }
-.record-code { font-size: 11px; background: #1a2332; color: #58a6ff; padding: 2px 8px; border-radius: 10px; margin-bottom: 3px; text-align: right; }
+.record-code { font-size: 11px; background: #1a2332; color: #58a6ff; padding: 2px 8px; border-radius: 10px; margin-bottom: 3px; }
 .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
-.bar-label { width: 70px; font-size: 10px; color: #8b949e; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex-shrink: 0; }
-.bar-bg { flex: 1; background: #21262d; border-radius: 4px; height: 14px; overflow: hidden; }
+.bar-label { width: 65px; font-size: 10px; color: #8b949e; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex-shrink: 0; }
+.bar-bg { flex: 1; background: #21262d; border-radius: 4px; height: 13px; overflow: hidden; }
 .bar-fill { height: 100%; border-radius: 4px; }
-.rec-card { background: #0d1117; border-radius: 8px; padding: 10px 12px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
-.section-title { font-size: 13px; font-weight: 700; color: #58a6ff; margin-bottom: 10px; }
+.rec-card { background: #0d1117; border-radius: 8px; padding: 10px 12px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
+.section-title { font-size: 13px; font-weight: 700; color: #58a6ff; margin-bottom: 8px; }
 .empty { text-align: center; color: #8b949e; padding: 40px 0; font-size: 14px; }
 .danger-badge { background: #3d1a1a; color: #f87171; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
-.searching { position: absolute; right: 12px; top: 12px; font-size: 12px; color: #8b949e; }
-.guide-box { background: #161b22; border: 1px solid #21262d; border-radius: 12px; padding: 14px; margin-top: 20px; }
-.guide-item { display: flex; gap: 8px; margin-bottom: 6px; font-size: 13px; color: #8b949e; }
-.error-text { font-size: 12px; color: #f87171; margin-top: 4px; }
+.new-badge { background: #1a3a1a; color: #4ade80; font-size: 10px; padding: 1px 6px; border-radius: 6px; font-weight: 700; margin-left: 4px; }
+.guide-box { background: #161b22; border: 1px solid #21262d; border-radius: 12px; padding: 14px; margin-top: 16px; }
+.filter-btns { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+.filter-btn { padding: 4px 10px; border-radius: 16px; border: 1px solid #30363d; background: transparent; color: #8b949e; font-size: 12px; cursor: pointer; }
+.filter-btn.active { border-color: #58a6ff; background: #1f3a5f; color: #58a6ff; }
 </style>
 </head>
 <body>
@@ -81,39 +75,25 @@ input:focus { outline: none; border-color: #58a6ff; }
 <div class="header">
   <div class="header-sub">PESTICIDE ROTATION MANAGER</div>
   <div class="header-title">🌿 농약 기작 관리</div>
+  <div class="header-desc">농진청 등록 데이터 기반 · 참외 전용 · 2026년 업데이트</div>
 </div>
 
-<!-- PWA 설치 배너 -->
-<div id="installBanner" class="install-banner" style="display:none">
+<div id="installBanner" class="install-banner">
   <div>
-    <div class="install-text">📲 앱으로 설치하기</div>
-    <div class="install-sub">홈화면에 추가하면 앱처럼 사용 가능!</div>
+    <div style="font-size:13px;font-weight:700;color:#4ade80">📲 앱으로 설치하기</div>
+    <div style="font-size:11px;color:#8b949e;margin-top:2px">홈화면에 추가하면 앱처럼 사용!</div>
   </div>
   <button class="install-btn" onclick="installApp()">설치</button>
 </div>
 
-<!-- iOS 설치 안내 -->
 <div id="iosGuide" class="ios-guide">
-  <div class="ios-guide-title">📲 iPhone 설치 방법</div>
-  <div class="ios-step"><span>1.</span><span>아래 <strong>공유버튼 (□↑)</strong> 탭</span></div>
-  <div class="ios-step"><span>2.</span><span><strong>"홈 화면에 추가"</strong> 선택</span></div>
-  <div class="ios-step"><span>3.</span><span><strong>"추가"</strong> 클릭</span></div>
-  <div class="ios-step"><span>4.</span><span>홈화면에 🌿 아이콘 생성!</span></div>
-  <button onclick="document.getElementById('iosGuide').style.display='none'" style="margin-top:8px;background:none;border:1px solid #30363d;color:#8b949e;padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer">닫기</button>
-</div>
-
-<div id="apiSetup" class="api-setup">
-  <div style="font-size:13px;font-weight:700;color:#f59e0b;margin-bottom:8px">🔑 API 키 설정</div>
-  <div style="font-size:12px;color:#8b949e;margin-bottom:4px">공공데이터 API 키 (data.go.kr)</div>
-  <input type="password" id="apiKeyInput" placeholder="공공데이터 API 키 입력">
-  <div style="font-size:12px;color:#8b949e;margin-bottom:4px;margin-top:4px">Cloudflare Worker 주소</div>
-  <input type="text" id="workerUrlInput" placeholder="예: farm-porxy.ekwldrl.workers.dev">
-  <div style="font-size:11px;color:#8b949e;margin-top:4px">※ API 키 없이도 내장 DB로 주요 농약 검색 가능</div>
-  <button class="btn-api" onclick="saveApiKey()">저장</button>
-</div>
-<div id="apiConnected" class="api-box" style="display:none">
-  <span style="font-size:12px;color:#4ade80">✅ 농진청 API 연결됨</span>
-  <button class="btn-change" onclick="changeApiKey()">변경</button>
+  <div style="font-size:13px;font-weight:700;color:#58a6ff;margin-bottom:8px">📲 iPhone 홈화면 추가 방법</div>
+  <div style="font-size:12px;color:#8b949e;line-height:1.8">
+    1️⃣ Safari 하단 <strong style="color:#e6edf3">공유버튼(□↑)</strong> 탭<br>
+    2️⃣ <strong style="color:#e6edf3">"홈 화면에 추가"</strong> 선택<br>
+    3️⃣ <strong style="color:#e6edf3">"추가"</strong> 클릭 → 🌿 아이콘 생성!
+  </div>
+  <button onclick="document.getElementById('iosGuide').style.display='none'" style="margin-top:10px;background:none;border:1px solid #30363d;color:#8b949e;padding:5px 12px;border-radius:6px;font-size:12px;cursor:pointer">닫기</button>
 </div>
 
 <div class="tabs">
@@ -132,17 +112,13 @@ input:focus { outline: none; border-color: #58a6ff; }
     </div>
   </div>
   <div class="card">
-    <div class="label">🌾 작물</div>
-    <div class="crop-btns" id="cropBtns"></div>
     <div class="label">📅 날짜</div>
     <input type="date" id="dateInput">
-    <div class="label">💊 상표명 검색</div>
+    <div class="label">💊 상표명 검색 <span style="font-size:10px;color:#4ade80;font-weight:400">(농진청 등록 424종)</span></div>
     <div class="pos-rel">
-      <input type="text" id="nameInput" placeholder="상표명 입력 (예: 오티바, 코니도)" oninput="handleNameInput(this.value)" autocomplete="off">
-      <span class="searching" id="searchingText" style="display:none">검색중...</span>
+      <input type="text" id="nameInput" placeholder="상표명 입력 (예: 오티바, 코니도, 캡틴)" oninput="handleNameInput(this.value)" autocomplete="off">
       <div class="suggest-box" id="suggestBox" style="display:none"></div>
     </div>
-    <div id="apiError" class="error-text" style="display:none"></div>
     <div id="matchedBox" class="matched-box" style="display:none"></div>
     <div class="label">🎯 방제 대상</div>
     <input type="text" id="targetInput" placeholder="예: 흰가루병, 진딧물">
@@ -152,59 +128,479 @@ input:focus { outline: none; border-color: #58a6ff; }
 </div>
 
 <div id="tab-history" class="page">
-  <input type="text" id="searchInput" placeholder="상표명, 작물, 기작코드 검색" oninput="renderHistory()" style="margin-bottom:14px">
+  <input type="text" id="searchInput" placeholder="상표명, 기작코드 검색" oninput="renderHistory()" style="margin-bottom:12px">
   <div id="historyContent"></div>
 </div>
 
 <div id="tab-recommend" class="page">
-  <div style="background:#161b22;border:1px solid #21262d;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#8b949e">
-    💡 기록 이력을 바탕으로 <span style="color:#58a6ff;font-weight:600">미사용 기작 계통</span>을 우선 추천합니다.
+  <div style="background:#161b22;border:1px solid #21262d;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#8b949e">
+    💡 사용 이력 기반 <span style="color:#58a6ff;font-weight:600">미사용 기작 우선</span> + <span style="color:#4ade80;font-weight:600">신약(2022년↑) 우선</span> 추천
   </div>
-  <div class="crop-btns" id="recCropBtns"></div>
+  <div class="filter-btns">
+    <button class="filter-btn active" onclick="setRecFilter('all')">전체</button>
+    <button class="filter-btn" onclick="setRecFilter('fungicide')">살균제</button>
+    <button class="filter-btn" onclick="setRecFilter('insecticide')">살충제</button>
+    <button class="filter-btn" onclick="setRecFilter('new')">신약만</button>
+  </div>
   <div id="recommendContent"></div>
 </div>
 
 <script>
-const CROSS_RESISTANCE = {
-  "FRAC-11(QoI)": ["아족시스트로빈","크레속심메틸","트리플록시스트로빈","피라클로스트로빈","오티바","아미스타","유니크"],
-  "FRAC-3(DMI)":  ["테부코나졸","디페노코나졸","프로피코나졸","헥사코나졸","훼나리","나티보"],
-  "FRAC-7(SDHI)": ["보스칼리드","플루오피람","칸투스","벨리스플러스","실바코"],
-  "FRAC-1(MBC)":  ["카벤다짐","티오파네이트메틸","베노밀","톱신"],
-  "FRAC-4":       ["메탈락실","메탈락실-M","리도밀골드"],
-  "FRAC-2(DCI)":  ["이프로디온","빈클로졸린","프로시미돈","로브랄"],
-  "FRAC-9(AP)":   ["시프로디닐","피리메타닐","스위치"],
-  "FRAC-40(CAA)": ["디메토모르프","만디프로파미드","포룸","레바스"],
-  "FRAC-U13":     ["새나리"],
-  "IRAC-4A(Neon)":["이미다클로프리드","티아메톡삼","아세타미프리드","코니도","모스피란","세티스","아타라"],
-  "IRAC-3A(Pyr)": ["사이퍼메트린","람다사이할로트린","에토펜프록스","델타메트린"],
-  "IRAC-1B(OP)":  ["클로르피리포스","다이아지논","말라티온"],
-  "IRAC-28(Dia)": ["클로란트라닐리프롤","플루벤다이아미드","캡틴","팔콘","엑셀런트"],
-  "IRAC-6(Aver)": ["아버멕틴","밀베멕틴","에마멕틴","버티맥","에이팜"],
-  "IRAC-21A(METI)":["펜피록시메이트","피리다벤","카네마이트"],
-  "IRAC-5(Spin)": ["스피노사드","스피네토람","총채탄","라데이트"],
-  "IRAC-23(Tet)": ["스피로테트라맷","스피로메시펜","오베론","엘레스탈"],
-  "IRAC-나7":     ["알투도"],
-  "IRAC-30":      ["인시피오"],
-  "IRAC-36":      ["이피콘"],
+const PESTICIDE_DB = [
+  {name:"에비섹트",code:"14",ingr:"Thiocyclam hydrogen oxalate",type:"살충",targets:["담배가루이"],date:"2026-04-27"},
+  {name:"선도왕",code:"21a",ingr:"Pyridaben",type:"살충",targets:["담배가루이"],date:"2026-04-20"},
+  {name:"모젠트",code:"23",ingr:"Spirotetramat",type:"살충",targets:["목화진딧물"],date:"2026-04-20"},
+  {name:"미라도",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["흰가루병", "노균병"],date:"2026-04-20"},
+  {name:"밀베노크",code:"6",ingr:"Milbemectin",type:"살충",targets:["점박이응애"],date:"2026-04-20"},
+  {name:"피리다",code:"21a",ingr:"Pyridaben",type:"살충",targets:["담배가루이"],date:"2025-12-30"},
+  {name:"완타치",code:"6+29",ingr:"Abamectin.Flonicamid",type:"살충",targets:["점박이응애", "목화진딧물"],date:"2025-12-23"},
+  {name:"균엔탑",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["노균병", "흰가루병"],date:"2025-12-23"},
+  {name:"스티온",code:"22b",ingr:"Dimpropyridaz.Metaflumizone",type:"살충",targets:["담배가루이", "목화진딧물"],date:"2025-11-10"},
+  {name:"볼리암타고",code:"6+28",ingr:"Abamectin.Chlorantraniliprole",type:"살충",targets:["점박이응애", "꽃노랑총채벌레"],date:"2025-09-12"},
+  {name:"총잡이",code:"23",ingr:"Spirotetramat",type:"살충",targets:["목화진딧물"],date:"2025-06-25"},
+  {name:"미래빛",code:"다2",ingr:"Pydiflumetofen",type:"살균",targets:["흰가루병", "잿빛곰팡이병"],date:"2025-06-17"},
+  {name:"아발론",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"2025-05-20"},
+  {name:"에코랑",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["흰가루병", "노균병"],date:"2025-04-29"},
+  {name:"무대포",code:"21a",ingr:"Pyridaben",type:"살충",targets:["담배가루이"],date:"2025-04-29"},
+  {name:"에스알티",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["흰가루병", "노균병"],date:"2025-03-12"},
+  {name:"롱가드",code:"3a",ingr:"Deltamethrin",type:"살충",targets:["목화진딧물"],date:"2025-03-04"},
+  {name:"아조로빈",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["노균병", "흰가루병"],date:"2025-03-04"},
+  {name:"인시피오",code:"30",ingr:"Isocycloseram",type:"살충",targets:["점박이응애"],date:"2025-02-24"},
+  {name:"백승",code:"16+4a",ingr:"Buprofezin.Thiacloprid",type:"살충",targets:["담배가루이"],date:"2025-02-21"},
+  {name:"스피릿",code:"23",ingr:"Spirotetramat",type:"살충",targets:["목화진딧물"],date:"2025-02-11"},
+  {name:"하이라이트",code:"9d+21a",ingr:"Afidopyropen+Pyridaben",type:"살충",targets:["목화진딧물", "담배가루이"],date:"2025-02-06"},
+  {name:"균메카",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["노균병", "흰가루병"],date:"2025-01-22"},
+  {name:"임팩션",code:"아5",ingr:"Dimethomorph",type:"살균",targets:["노균병"],date:"2025-01-22"},
+  {name:"파크란",code:"다4+바9",ingr:"Cyazofamid+Fluoxapiprolin",type:"살균",targets:["노균병"],date:"2025-01-17"},
+  {name:"허리케인",code:"다4",ingr:"Cyazofamid",type:"살균",targets:["노균병"],date:"2024-12-11"},
+  {name:"엑스칼리아",code:"다2",ingr:"Inpyrfluxam",type:"살균",targets:["흰가루병"],date:"2024-12-08"},
+  {name:"엘리고",code:"다2+다3",ingr:"Inpyrfluxam+Mandestrobin",type:"살균",targets:["흰가루병"],date:"2024-12-08"},
+  {name:"시바나",code:"바9",ingr:"Fluoxapiprolin",type:"살균",targets:["노균병"],date:"2024-12-08"},
+  {name:"쓸이충",code:"6",ingr:"Emamectin benzoate",type:"살충",targets:["담배가루이"],date:"2024-09-26"},
+  {name:"디져스",code:"30+9b",ingr:"Fluxametamide+Pyrifluquinazon",type:"살충",targets:["담배가루이", "꽃노랑총채벌레"],date:"2024-08-12"},
+  {name:"스퀴즈",code:"9d",ingr:"Afidopyropen+Dimpropyridaz",type:"살충",targets:["목화진딧물"],date:"2024-08-12"},
+  {name:"충제트",code:"21a",ingr:"Pyridaben",type:"살충",targets:["담배가루이"],date:"2024-07-30"},
+  {name:"백전노장",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"2024-07-08"},
+  {name:"새벽종",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"2024-06-27"},
+  {name:"가루비네",code:"나6",ingr:"Pyriofenone",type:"살균",targets:["흰가루병"],date:"2024-06-17"},
+  {name:"유일벌레자바",code:"3a",ingr:"Deltamethrin",type:"살충",targets:["목화진딧물"],date:"2024-04-26"},
+  {name:"필다벤",code:"21a",ingr:"Pyridaben",type:"살충",targets:["담배가루이"],date:"2024-04-01"},
+  {name:"마이트킬",code:"23",ingr:"Spiromesifen",type:"살충",targets:["점박이응애"],date:"2024-04-01"},
+  {name:"체어맨",code:"21a",ingr:"Pyridaben",type:"살충",targets:["담배가루이"],date:"2024-04-01"},
+  {name:"아퓨란",code:"4a",ingr:"Dinotefuran",type:"살충",targets:["목화진딧물", "담배가루이"],date:"2024-02-08"},
+  {name:"커트라인",code:"28",ingr:"Cyantraniliprole",type:"살충",targets:["목화진딧물"],date:"2023-11-08"},
+  {name:"신농팜델타린",code:"3a",ingr:"Deltamethrin",type:"살충",targets:["목화진딧물"],date:"2023-10-30"},
+  {name:"스팅어",code:"21a",ingr:"Pyridaben",type:"살충",targets:["담배가루이"],date:"2023-10-11"},
+  {name:"모대스",code:"23",ingr:"Spirotetramat",type:"살충",targets:["목화진딧물"],date:"2023-10-11"},
+  {name:"철벽방어",code:"나5+아5",ingr:"Fluopicolide+Iprovalicarb",type:"살균",targets:["노균병"],date:"2023-09-22"},
+  {name:"올웨이즈",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"2023-09-08"},
+  {name:"커버스",code:"다4+바9",ingr:"Cyazofamid+Oxathiapiprolin",type:"살균",targets:["노균병"],date:"2023-08-09"},
+  {name:"바이파",code:"4a+1b",ingr:"Dinotefuran+Fosthiazate",type:"살충",targets:["담배가루이"],date:"2023-08-09"},
+  {name:"프리퍼",code:"다2",ingr:"Isopyrazam",type:"살균",targets:["흰가루병"],date:"2023-07-19"},
+  {name:"보라미",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["흰가루병", "노균병"],date:"2023-04-13"},
+  {name:"레오파드",code:"4a+9b",ingr:"Acetamiprid+Pymetrozine",type:"살충",targets:["목화진딧물"],date:"2023-03-16"},
+  {name:"플로빈",code:"다3+다4",ingr:"Azoxystrobin+Florylpicoxamid",type:"살균",targets:["잿빛곰팡이병", "흰가루병"],date:"2023-03-02"},
+  {name:"킬링샷",code:"23",ingr:"Spirotetramat",type:"살충",targets:["목화진딧물"],date:"2023-02-06"},
+  {name:"가루스타",code:"21a",ingr:"Pyridaben",type:"살충",targets:["담배가루이"],date:"2022-12-20"},
+  {name:"엘레스탈",code:"4a+23",ingr:"Acetamiprid+Spiropidion",type:"살충",targets:["담배가루이", "목화진딧물"],date:"2022-11-14"},
+  {name:"메트린",code:"3a",ingr:"Deltamethrin",type:"살충",targets:["목화진딧물"],date:"2022-09-02"},
+  {name:"유원델타린",code:"3a",ingr:"Deltamethrin",type:"살충",targets:["목화진딧물"],date:"2022-08-01"},
+  {name:"블랙다이아",code:"마2+다2",ingr:"Fludioxonil+Isofetamid",type:"살균",targets:["흰가루병"],date:"2022-05-09"},
+  {name:"유에프시",code:"15+9b",ingr:"Lufenuron+Pymetrozine",type:"살충",targets:["목화진딧물"],date:"2022-05-09"},
+  {name:"베스탄",code:"1b",ingr:"Acephate",type:"살충",targets:["목화진딧물"],date:"2022-05-09"},
+  {name:"현농솔루션",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"2022-05-04"},
+  {name:"균카트",code:"아5+다3",ingr:"Dimethomorph+Pyraclostrobin",type:"살균",targets:["노균병"],date:"2022-04-20"},
+  {name:"깍지스탑",code:"16",ingr:"Buprofezin",type:"살충",targets:["담배가루이"],date:"2022-04-20"},
+  {name:"케오왕",code:"3a",ingr:"Deltamethrin",type:"살충",targets:["목화진딧물"],date:"2022-03-28"},
+  {name:"장풍",code:"6+23",ingr:"Abamectin+Spiromesifen",type:"살충",targets:["점박이응애"],date:"2022-01-25"},
+  {name:"아피스",code:"6+28",ingr:"Abamectin+Chlorantraniliprole",type:"살충",targets:["꽃노랑총채벌레", "점박이응애"],date:"2022-01-14"},
+  {name:"워록",code:"6",ingr:"Emamectin benzoate",type:"살충",targets:["담배가루이"],date:"2022-01-14"},
+  {name:"큐멕틴",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"2022-01-14"},
+  {name:"애피킬",code:"29",ingr:"Flonicamid",type:"살충",targets:["목화진딧물", "담배가루이"],date:"2021-12-30"},
+  {name:"바로충",code:"21a",ingr:"Pyridaben",type:"살충",targets:["담배가루이"],date:"2021-12-30"},
+  {name:"시워내플러스",code:"미분류(살균제)",ingr:"Flutianil",type:"살균",targets:["흰가루병"],date:"2021-11-25"},
+  {name:"버픽스",code:"다4",ingr:"Florylpicoxamid",type:"살균",targets:["흰가루병"],date:"2021-11-11"},
+  {name:"충업세",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"2021-07-27"},
+  {name:"균업세",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["노균병", "흰가루병"],date:"2021-07-27"},
+  {name:"자벨린",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["노균병", "흰가루병"],date:"2021-06-25"},
+  {name:"크리올",code:"다2",ingr:"Isofetamid",type:"살균",targets:["흰가루병", "잿빛곰팡이병"],date:"2021-06-25"},
+  {name:"킹팜",code:"6",ingr:"Emamectin benzoate",type:"살충",targets:["담배가루이"],date:"2021-06-15"},
+  {name:"마루치",code:"다3",ingr:"Kresoxim-methyl",type:"살균",targets:["흰가루병"],date:"2021-06-15"},
+  {name:"균마타",code:"아5",ingr:"Dimethomorph",type:"살균",targets:["노균병"],date:"2021-06-15"},
+  {name:"그리폰",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["흰가루병", "노균병"],date:"2021-06-09"},
+  {name:"마이트킹",code:"33",ingr:"Acynonapyr",type:"살충",targets:["점박이응애"],date:"2021-02-26"},
+  {name:"포르티스브이",code:"30+6",ingr:"Broflanilide+Emamectin benzoate",type:"살충",targets:["꽃노랑총채벌레"],date:"2021-02-25"},
+  {name:"카스피",code:"33+10b",ingr:"Acynonapyr+Etoxazole",type:"살충",targets:["점박이응애"],date:"2021-01-15"},
+  {name:"파이토가드",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["노균병", "흰가루병"],date:"2021-01-14"},
+  {name:"로멕틴",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"2021-01-14"},
+  {name:"컷세이퍼",code:"13+6",ingr:"Chlorfenapyr+Emamectin benzoate",type:"살충",targets:["꽃노랑총채벌레"],date:"2021-01-08"},
+  {name:"강터치",code:"6+25b",ingr:"Abamectin+Pyflubumide",type:"살충",targets:["점박이응애"],date:"2021-01-08"},
+  {name:"에코샷",code:"생2",ingr:"Bacillus amyloliquefaciens D-747",type:"살균",targets:["흰가루병"],date:"2021-01-04"},
+  {name:"마스터킬",code:"6+13",ingr:"Abamectin+Chlorfenapyr",type:"살충",targets:["점박이응애"],date:"2020-12-30"},
+  {name:"응전",code:"33+13",ingr:"Acynonapyr+Chlorfenapyr",type:"살충",targets:["점박이응애"],date:"2020-12-29"},
+  {name:"쏘렌토",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"2020-12-29"},
+  {name:"베르시스",code:"9d",ingr:"Afidopyropen",type:"살충",targets:["담배가루이", "목화진딧물"],date:"2020-12-29"},
+  {name:"투빅",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["노균병", "흰가루병"],date:"2020-12-24"},
+  {name:"그린비",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["노균병", "흰가루병"],date:"2020-12-23"},
+  {name:"베리마크",code:"28",ingr:"Cyantraniliprole",type:"살충",targets:["담배가루이"],date:"2020-12-18"},
+  {name:"세피나플러스",code:"9d",ingr:"Afidopyropen",type:"살충",targets:["목화진딧물"],date:"2020-12-14"},
+  {name:"에이팜",code:"6",ingr:"Emamectin benzoate",type:"살충",targets:["담배가루이"],date:"2020-11-13"},
+  {name:"라스트콜",code:"아4",ingr:"Polyoxin D",type:"살균",targets:["흰가루병"],date:"2020-09-21"},
+  {name:"레옹",code:"10b",ingr:"Etoxazole",type:"살충",targets:["점박이응애"],date:"2020-09-18"},
+  {name:"다조타",code:"21a",ingr:"Pyridaben",type:"살충",targets:["담배가루이"],date:"2020-09-17"},
+  {name:"총알탄",code:"34",ingr:"Flometoquin",type:"살충",targets:["꽃노랑총채벌레", "담배가루이"],date:"2020-08-24"},
+  {name:"다이마이트",code:"33",ingr:"Acynonapyr",type:"살충",targets:["점박이응애"],date:"2020-08-24"},
+  {name:"총채나방방",code:"6+34",ingr:"Emamectin benzoate+Flometoquin",type:"살충",targets:["담배가루이", "꽃노랑총채벌레"],date:"2020-08-24"},
+  {name:"퍼펙트",code:"6+34",ingr:"Abamectin+Flometoquin",type:"살충",targets:["꽃노랑총채벌레", "담배가루이"],date:"2020-08-24"},
+  {name:"기개세",code:"3a",ingr:"Bifenthrin",type:"살충",targets:["목화진딧물"],date:"2020-06-30"},
+  {name:"버팀목",code:"29",ingr:"Flonicamid",type:"살충",targets:["담배가루이", "목화진딧물"],date:"2020-06-09"},
+  {name:"동방아그로넉다운",code:"21a+9b",ingr:"Pyridaben+Pyrifluquinazon",type:"살충",targets:["담배가루이"],date:"2020-05-13"},
+  {name:"델타시스",code:"3a",ingr:"Deltamethrin",type:"살충",targets:["목화진딧물"],date:"2020-05-12"},
+  {name:"대유아족시",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["흰가루병", "노균병"],date:"2020-05-12"},
+  {name:"시월애",code:"23",ingr:"Spirodiclofen",type:"살충",targets:["점박이응애"],date:"2020-04-27"},
+  {name:"제라진",code:"30",ingr:"Broflanilide",type:"살충",targets:["꽃노랑총채벌레"],date:"2020-04-13"},
+  {name:"레빅사",code:"사1",ingr:"Mefentrifluconazole",type:"살균",targets:["잿빛곰팡이병", "흰가루병"],date:"2020-04-13"},
+  {name:"렌비어",code:"사1",ingr:"Mefentrifluconazole",type:"살균",targets:["흰가루병"],date:"2020-04-13"},
+  {name:"록키",code:"29",ingr:"Flonicamid",type:"살충",targets:["담배가루이"],date:"2020-04-08"},
+  {name:"아이언맨",code:"13",ingr:"Chlorfenapyr",type:"살충",targets:["꽃노랑총채벌레"],date:"2020-04-08"},
+  {name:"충다이",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"2020-04-01"},
+  {name:"마금",code:"아5",ingr:"Mandipropamid",type:"살균",targets:["노균병"],date:"2020-03-17"},
+  {name:"세티스",code:"29",ingr:"Flonicamid",type:"살충",targets:["담배가루이", "목화진딧물"],date:"2020-03-17"},
+  {name:"라피탄",code:"28",ingr:"Cyclaniliprole",type:"살충",targets:["꽃노랑총채벌레"],date:"2020-03-17"},
+  {name:"나이스샷",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["흰가루병", "노균병"],date:"2020-03-11"},
+  {name:"프라도",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"2019-11-27"},
+  {name:"응애스타",code:"6+10b",ingr:"Abamectin+Etoxazole",type:"살충",targets:["점박이응애"],date:"2019-11-01"},
+  {name:"에스페로",code:"15+30",ingr:"Flufenoxuron+Fluxametamide",type:"살충",targets:["꽃노랑총채벌레"],date:"2019-11-01"},
+  {name:"윙스팬",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["흰가루병", "노균병"],date:"2019-10-21"},
+  {name:"더블멕틴",code:"6+6",ingr:"Abamectin+Emamectin benzoate",type:"살충",targets:["담배가루이"],date:"2019-09-23"},
+  {name:"행운",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["흰가루병", "노균병"],date:"2019-08-23"},
+  {name:"더블에스",code:"다4+아5",ingr:"Cyazofamid+Dimethomorph",type:"살균",targets:["노균병"],date:"2019-08-09"},
+  {name:"엘티이",code:"13+6",ingr:"Chlorfenapyr+Emamectin benzoate",type:"살충",targets:["꽃노랑총채벌레"],date:"2019-08-09"},
+  {name:"파인더",code:"다4",ingr:"Cyazofamid",type:"살균",targets:["노균병"],date:"2019-07-18"},
+  {name:"진스탑",code:"4a",ingr:"Imidacloprid",type:"살충",targets:["목화진딧물"],date:"2019-07-04"},
+  {name:"싸이캅",code:"28",ingr:"Cyantraniliprole",type:"살충",targets:["목화진딧물"],date:"2019-06-04"},
+  {name:"선승",code:"나3+다3",ingr:"Ethaboxam+Pyraclostrobin",type:"살균",targets:["노균병", "흰가루병"],date:"2019-04-23"},
+  {name:"오베론스피드",code:"6+23",ingr:"Abamectin+Spiromesifen",type:"살충",targets:["담배가루이", "점박이응애"],date:"2019-04-23"},
+  {name:"불패무적",code:"6+23",ingr:"Abamectin+Spiromesifen",type:"살충",targets:["담배가루이"],date:"2019-04-23"},
+  {name:"균엔터",code:"다4+사1",ingr:"Amisulbrom+Tetraconazole",type:"살균",targets:["노균병", "흰가루병"],date:"2019-04-23"},
+  {name:"보스카",code:"29",ingr:"Flonicamid",type:"살충",targets:["담배가루이"],date:"2019-04-23"},
+  {name:"브리가드",code:"6+3a",ingr:"Abamectin+Bifenthrin",type:"살충",targets:["점박이응애"],date:"2019-04-23"},
+  {name:"타르보",code:"13+30",ingr:"Chlorfenapyr+Fluxametamide",type:"살충",targets:["꽃노랑총채벌레"],date:"2019-04-23"},
+  {name:"버디프린스",code:"28",ingr:"Cyclaniliprole",type:"살충",targets:["꽃노랑총채벌레"],date:"2019-04-23"},
+  {name:"아벰",code:"6+6",ingr:"Abamectin+Emamectin benzoate",type:"살충",targets:["점박이응애", "꽃노랑총채벌레", "담배가루이"],date:"2019-04-23"},
+  {name:"미소팜",code:"다3",ingr:"Kresoxim-methyl",type:"살균",targets:["흰가루병"],date:"2019-04-23"},
+  {name:"균상천하",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["노균병", "흰가루병"],date:"2019-02-19"},
+  {name:"떼부자",code:"3a",ingr:"Bifenthrin",type:"살충",targets:["목화진딧물"],date:"2019-02-19"},
+  {name:"베스킹",code:"4a",ingr:"Acetamiprid",type:"살충",targets:["목화진딧물"],date:"2019-02-19"},
+  {name:"기습",code:"다4",ingr:"Cyazofamid",type:"살균",targets:["노균병"],date:"2019-02-18"},
+  {name:"빅펀치",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["흰가루병", "노균병"],date:"2019-02-12"},
+  {name:"오프너",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["노균병", "흰가루병"],date:"2019-02-12"},
+  {name:"킹팜골드",code:"6",ingr:"Emamectin benzoate",type:"살충",targets:["담배가루이"],date:"2019-02-12"},
+  {name:"아리델타린",code:"3a",ingr:"Deltamethrin",type:"살충",targets:["목화진딧물"],date:"2018-12-26"},
+  {name:"비긴엔",code:"다2",ingr:"Pyraziflumid",type:"살균",targets:["흰가루병"],date:"2018-12-21"},
+  {name:"카네기",code:"다3",ingr:"Pyraclostrobin",type:"살균",targets:["노균병"],date:"2018-12-20"},
+  {name:"참수리",code:"4a",ingr:"Dinotefuran",type:"살충",targets:["담배가루이"],date:"2018-12-20"},
+  {name:"완타치",code:"6+29",ingr:"Abamectin+Flonicamid",type:"살충",targets:["목화진딧물", "점박이응애"],date:"2018-12-18"},
+  {name:"캡틴에이",code:"카+다3",ingr:"Captan+Trifloxystrobin",type:"살균",targets:["흰가루병"],date:"2018-12-18"},
+  {name:"가이드",code:"다2+다3",ingr:"Boscalid+Kresoxim-methyl",type:"살균",targets:["흰가루병"],date:"2018-11-20"},
+  {name:"잭팟",code:"20d+23",ingr:"Bifenazate+Spirodiclofen",type:"살충",targets:["점박이응애"],date:"2018-11-20"},
+  {name:"롬멜",code:"다4",ingr:"Cyazofamid",type:"살균",targets:["노균병"],date:"2018-09-19"},
+  {name:"플로니카",code:"29",ingr:"Flonicamid",type:"살충",targets:["목화진딧물"],date:"2018-09-19"},
+  {name:"레인지",code:"6",ingr:"Emamectin benzoate",type:"살충",targets:["담배가루이"],date:"2018-09-19"},
+  {name:"마이트제로",code:"6+13",ingr:"Abamectin+Chlorfenapyr",type:"살충",targets:["점박이응애"],date:"2018-09-07"},
+  {name:"미리본",code:"다2+다3",ingr:"Fluxapyroxad+Pyraclostrobin",type:"살균",targets:["흰가루병", "노균병"],date:"2018-09-07"},
+  {name:"히든키",code:"4a",ingr:"Acetamiprid",type:"살충",targets:["담배가루이", "목화진딧물"],date:"2018-09-07"},
+  {name:"다트롤",code:"30",ingr:"Fluxametamide",type:"살충",targets:["점박이응애", "꽃노랑총채벌레"],date:"2018-05-15"},
+  {name:"캡틴",code:"30",ingr:"Fluxametamide",type:"살충",targets:["꽃노랑총채벌레", "담배가루이", "점박이응애"],date:"2018-05-15"},
+  {name:"슈퍼칸",code:"4a",ingr:"Acetamiprid",type:"살충",targets:["목화진딧물"],date:"2018-05-08"},
+  {name:"매직탄",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["흰가루병", "노균병"],date:"2018-05-08"},
+  {name:"아젠포스",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["흰가루병", "노균병"],date:"2018-04-11"},
+  {name:"에코멕틴",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"2018-03-19"},
+  {name:"타이틀",code:"6+4a",ingr:"Abamectin+Acetamiprid",type:"살충",targets:["점박이응애"],date:"2018-02-28"},
+  {name:"발리펜",code:"아5",ingr:"Valifenalate",type:"살균",targets:["노균병"],date:"2018-02-28"},
+  {name:"충체포",code:"6+6",ingr:"Abamectin+Emamectin benzoate",type:"살충",targets:["꽃노랑총채벌레", "담배가루이"],date:"2018-02-28"},
+  {name:"트리보",code:"4a+7c",ingr:"Acetamiprid+Pyriproxyfen",type:"살충",targets:["온실가루이"],date:"2018-01-03"},
+  {name:"엑시렐",code:"28",ingr:"Cyantraniliprole",type:"살충",targets:["담배가루이"],date:"2017-12-29"},
+  {name:"균파워",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["흰가루병", "노균병"],date:"2017-12-07"},
+  {name:"트립솔",code:"6+3a",ingr:"Abamectin+Acrinathrin",type:"살충",targets:["꽃노랑총채벌레"],date:"2017-12-07"},
+  {name:"온천하",code:"4a+6",ingr:"Acetamiprid+Emamectin benzoate",type:"살충",targets:["담배가루이", "꽃노랑총채벌레"],date:"2017-11-22"},
+  {name:"번아웃",code:"6+4a",ingr:"Abamectin+Dinotefuran",type:"살충",targets:["담배가루이"],date:"2017-11-22"},
+  {name:"들바람",code:"1a+4a",ingr:"Benfuracarb+Imidacloprid",type:"살충",targets:["목화진딧물"],date:"2017-11-22"},
+  {name:"돌개바람",code:"다3+아5",ingr:"Famoxadone+Valifenalate",type:"살균",targets:["노균병"],date:"2017-11-22"},
+  {name:"헥사곤",code:"29",ingr:"Flonicamid",type:"살충",targets:["목화진딧물", "담배가루이"],date:"2017-11-22"},
+  {name:"차무로",code:"아5+카",ingr:"Benthiavalicarb-isopropyl+Chlorothalonil",type:"살균",targets:["노균병", "흰가루병"],date:"2017-11-22"},
+  {name:"사이탄",code:"28",ingr:"Cyclaniliprole",type:"살충",targets:["꽃노랑총채벌레"],date:"2017-10-19"},
+  {name:"올타쿠나",code:"다2",ingr:"Isopyrazam",type:"살균",targets:["흰가루병"],date:"2017-09-20"},
+  {name:"코리스",code:"다2+다3",ingr:"Boscalid+Kresoxim-methyl",type:"살균",targets:["흰가루병"],date:"2017-09-20"},
+  {name:"몬스타",code:"아5+바9",ingr:"Benthiavalicarb-isopropyl+Oxathiapiprolin",type:"살균",targets:["노균병"],date:"2017-08-25"},
+  {name:"한바탕",code:"4a+9b",ingr:"Acetamiprid+Pymetrozine",type:"살충",targets:["목화진딧물"],date:"2017-08-25"},
+  {name:"조르벡바운티",code:"다3+바9",ingr:"Famoxadone+Oxathiapiprolin",type:"살균",targets:["노균병"],date:"2017-08-25"},
+  {name:"이슬탄",code:"미분류(살균제)",ingr:"Picarbutrazox",type:"살균",targets:["노균병"],date:"2017-04-03"},
+  {name:"두루두루",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["흰가루병", "노균병"],date:"2017-03-29"},
+  {name:"올스타",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"2017-03-20"},
+  {name:"에프원",code:"마2+다2",ingr:"Fludioxonil+Isofetamid",type:"살균",targets:["흰가루병"],date:"2017-01-26"},
+  {name:"더블플레이",code:"마2+다2",ingr:"Fludioxonil+Penthiopyrad",type:"살균",targets:["흰가루병"],date:"2017-01-26"},
+  {name:"반조포르테",code:"아5+다5",ingr:"Dimethomorph+Fluazinam",type:"살균",targets:["노균병"],date:"2017-01-26"},
+  {name:"아바멕킬",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"2017-01-06"},
+  {name:"노블레스",code:"25b",ingr:"Pyflubumide",type:"살충",targets:["점박이응애"],date:"2017-01-06"},
+  {name:"선문이응애충",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"2016-12-13"},
+  {name:"프리건",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["흰가루병", "노균병"],date:"2016-12-13"},
+  {name:"균디스",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["노균병", "흰가루병"],date:"2016-11-16"},
+  {name:"한빛",code:"사1",ingr:"Hexaconazole",type:"살균",targets:["흰가루병"],date:"2016-11-16"},
+  {name:"스파이트",code:"21a",ingr:"Pyridaben",type:"살충",targets:["담배가루이"],date:"2016-11-16"},
+  {name:"품격",code:"아5+미분류(살균제)",ingr:"Dimethomorph+Picarbutrazox",type:"살균",targets:["노균병"],date:"2016-11-07"},
+  {name:"더블킥",code:"6+5",ingr:"Abamectin+Spinetoram",type:"살충",targets:["꽃노랑총채벌레", "담배가루이"],date:"2016-11-07"},
+  {name:"클릭",code:"다3+사1",ingr:"Azoxystrobin+Hexaconazole",type:"살균",targets:["흰가루병"],date:"2016-11-01"},
+  {name:"아그리젠토레전드",code:"6",ingr:"Emamectin benzoate",type:"살충",targets:["담배가루이"],date:"2016-10-13"},
+  {name:"퀸텍",code:"미분류(살균제)",ingr:"Picarbutrazox",type:"살균",targets:["노균병"],date:"2016-08-02"},
+  {name:"온사랑",code:"6+4a",ingr:"Abamectin+Acetamiprid",type:"살충",targets:["꽃노랑총채벌레"],date:"2016-08-02"},
+  {name:"베지크린",code:"아5",ingr:"Benthiavalicarb-isopropyl",type:"살균",targets:["노균병"],date:"2016-04-29"},
+  {name:"살무사",code:"4a+6",ingr:"Acetamiprid+Emamectin benzoate",type:"살충",targets:["꽃노랑총채벌레"],date:"2016-04-29"},
+  {name:"프로블라드",code:"미분류",ingr:"BLAD",type:"살균",targets:["흰가루병"],date:"2016-04-29"},
+  {name:"동방아그로솔루션",code:"다4+아5",ingr:"Cyazofamid+Valifenalate",type:"살균",targets:["노균병"],date:"2016-04-12"},
+  {name:"겔럭시",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"2016-03-31"},
+  {name:"리치팜플러스",code:"6",ingr:"Emamectin benzoate",type:"살충",targets:["꽃노랑총채벌레"],date:"2016-03-31"},
+  {name:"돌격대",code:"1b+3a",ingr:"Dichlorvos+Lambda-cyhalothrin",type:"살충",targets:["목화진딧물"],date:"2016-01-26"},
+  {name:"응원",code:"25a",ingr:"Cyflumetofen",type:"살충",targets:["점박이응애"],date:"2016-01-26"},
+  {name:"규네조아",code:"다3+사1",ingr:"Azoxystrobin+Tetraconazole",type:"살균",targets:["흰가루병"],date:"2016-01-26"},
+  {name:"드림하트",code:"다3+사1",ingr:"Kresoxim-methyl+Triflumizole",type:"살균",targets:["노균병", "흰가루병"],date:"2016-01-26"},
+  {name:"션샤인",code:"다3+마2",ingr:"Azoxystrobin+Fludioxonil",type:"살균",targets:["흰가루병"],date:"2016-01-26"},
+  {name:"미리카트",code:"다4",ingr:"Cyazofamid",type:"살균",targets:["노균병"],date:"2015-12-21"},
+  {name:"카브리오",code:"다3",ingr:"Pyraclostrobin",type:"살균",targets:["노균병"],date:"2015-12-09"},
+  {name:"골드윈",code:"16+9b",ingr:"Buprofezin+Pyrifluquinazon",type:"살충",targets:["담배가루이", "온실가루이"],date:"2015-10-28"},
+  {name:"선발진",code:"3a+4a",ingr:"Bifenthrin+Imidacloprid",type:"살충",targets:["목화진딧물"],date:"2015-10-28"},
+  {name:"기대찬",code:"6+29",ingr:"Emamectin benzoate+Flonicamid",type:"살충",targets:["목화진딧물", "꽃노랑총채벌레"],date:"2015-07-23"},
+  {name:"포르투나",code:"다3+사1",ingr:"Pyraclostrobin+Tebuconazole",type:"살균",targets:["흰가루병"],date:"2015-07-23"},
+  {name:"온타임",code:"다2+다3",ingr:"Fluxapyroxad+Kresoxim-methyl",type:"살균",targets:["흰가루병"],date:"2015-07-23"},
+  {name:"어화둥둥",code:"나3+다3",ingr:"Ethaboxam+Famoxadone",type:"살균",targets:["노균병"],date:"2015-06-12"},
+  {name:"베네비아",code:"28",ingr:"Cyantraniliprole",type:"살충",targets:["목화진딧물"],date:"2015-06-12"},
+  {name:"엔비도스피드",code:"6+23",ingr:"Abamectin+Spirodiclofen",type:"살충",targets:["점박이응애"],date:"2015-04-23"},
+  {name:"카디스",code:"다2",ingr:"Fluxapyroxad",type:"살균",targets:["흰가루병"],date:"2015-04-23"},
+  {name:"백만장자",code:"3a+4c",ingr:"Lambda-cyhalothrin+Sulfoxaflor",type:"살충",targets:["목화진딧물"],date:"2015-04-23"},
+  {name:"빌드업",code:"4a",ingr:"Acetamiprid",type:"살충",targets:["담배가루이"],date:"2015-04-23"},
+  {name:"샤이나",code:"마2",ingr:"Fludioxonil",type:"살균",targets:["잿빛곰팡이병"],date:"2015-04-23"},
+  {name:"달마지",code:"13+3a",ingr:"Chlorfenapyr+Etofenprox",type:"살충",targets:["꽃노랑총채벌레", "점박이응애"],date:"2015-02-04"},
+  {name:"젠토해드림골드",code:"마2",ingr:"Fludioxonil",type:"살균",targets:["잿빛곰팡이병"],date:"2015-01-08"},
+  {name:"오티머스",code:"다3+카",ingr:"Azoxystrobin+Chlorothalonil",type:"살균",targets:["노균병", "흰가루병"],date:"2015-01-08"},
+  {name:"돌직구",code:"6+21a",ingr:"Abamectin+Fenazaquin",type:"살충",targets:["점박이응애"],date:"2014-10-27"},
+  {name:"위트니스",code:"다2+나6",ingr:"Boscalid+Metrafenone",type:"살균",targets:["잿빛곰팡이병", "흰가루병"],date:"2014-10-27"},
+  {name:"슈퍼펀치",code:"6+4c",ingr:"Abamectin+Sulfoxaflor",type:"살충",targets:["목화진딧물"],date:"2014-09-04"},
+  {name:"철벽수비",code:"1a+1b",ingr:"Benfuracarb+Fosthiazate",type:"살충",targets:["목화진딧물", "담배가루이"],date:"2014-08-25"},
+  {name:"진검",code:"4a+28",ingr:"Acetamiprid+Flubendiamide",type:"살충",targets:["목화진딧물"],date:"2014-07-24"},
+  {name:"컷다운",code:"25a+10b",ingr:"Cyenopyrafen+Etoxazole",type:"살충",targets:["점박이응애"],date:"2014-07-21"},
+  {name:"격파",code:"4a+5",ingr:"Dinotefuran+Spinetoram",type:"살충",targets:["담배가루이"],date:"2014-07-21"},
+  {name:"질주",code:"사1+사1",ingr:"Fluquinconazole+Tetraconazole",type:"살균",targets:["흰가루병"],date:"2014-07-21"},
+  {name:"셀빙",code:"다4+카",ingr:"Amisulbrom+Chlorothalonil",type:"살균",targets:["노균병"],date:"2014-07-21"},
+  {name:"마에스트로",code:"16+5",ingr:"Buprofezin+Spinetoram",type:"살충",targets:["꽃노랑총채벌레"],date:"2014-07-21"},
+  {name:"팡파레에스",code:"9b",ingr:"Pyrifluquinazon",type:"살충",targets:["담배가루이"],date:"2014-07-21"},
+  {name:"깍지킬골드",code:"4a+16",ingr:"Acetamiprid+Buprofezin",type:"살충",targets:["담배가루이"],date:"2014-07-21"},
+  {name:"비반도",code:"나6",ingr:"Metrafenone",type:"살균",targets:["흰가루병"],date:"2014-07-09"},
+  {name:"탑앤탑",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["노균병", "흰가루병"],date:"2014-05-28"},
+  {name:"바로다이",code:"21a",ingr:"Pyridaben",type:"살충",targets:["담배가루이"],date:"2014-02-14"},
+  {name:"배팅",code:"사1+마2",ingr:"Difenoconazole+Fludioxonil",type:"살균",targets:["흰가루병"],date:"2014-02-14"},
+  {name:"충에짱",code:"3a",ingr:"Bifenthrin",type:"살충",targets:["목화진딧물"],date:"2014-01-27"},
+  {name:"아너스",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["흰가루병", "노균병"],date:"2013-12-02"},
+  {name:"한미르",code:"사1",ingr:"Triflumizole",type:"살균",targets:["흰가루병"],date:"2013-11-11"},
+  {name:"블루오션",code:"다2+나6",ingr:"Fluxapyroxad+Metrafenone",type:"살균",targets:["흰가루병"],date:"2013-11-05"},
+  {name:"탄저.역병뚝",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["노균병"],date:"2013-08-26"},
+  {name:"펜피라",code:"사3",ingr:"Fenpyrazamine",type:"살균",targets:["잿빛곰팡이병"],date:"2013-06-21"},
+  {name:"프로큐어",code:"28",ingr:"Cyantraniliprole",type:"살충",targets:["꽃노랑총채벌레"],date:"2013-06-21"},
+  {name:"원프로",code:"다4+나5",ingr:"Cyazofamid+Fluopicolide",type:"살균",targets:["노균병"],date:"2013-06-21"},
+  {name:"힘센",code:"4a+4c",ingr:"Acetamiprid+Sulfoxaflor",type:"살충",targets:["목화진딧물"],date:"2013-06-21"},
+  {name:"미네토스타",code:"28+9b",ingr:"Cyantraniliprole+Pymetrozine",type:"살충",targets:["꽃노랑총채벌레", "목화진딧물", "담배가루이"],date:"2013-06-21"},
+  {name:"예작",code:"다3+아5",ingr:"Azoxystrobin+Dimethomorph",type:"살균",targets:["노균병"],date:"2013-06-21"},
+  {name:"머큐리슈퍼",code:"다2+다3",ingr:"Fluopyram+Trifloxystrobin",type:"살균",targets:["흰가루병"],date:"2013-06-21"},
+  {name:"업로드",code:"3a",ingr:"Deltamethrin",type:"살충",targets:["목화진딧물"],date:"2013-06-10"},
+  {name:"호리도",code:"4a",ingr:"Imidacloprid",type:"살충",targets:["목화진딧물"],date:"2013-06-10"},
+  {name:"새나리",code:"다2",ingr:"Isopyrazam",type:"살균",targets:["흰가루병"],date:"2013-03-22"},
+  {name:"응애특급",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"2013-03-22"},
+  {name:"프로파티",code:"나6",ingr:"Pyriofenone",type:"살균",targets:["흰가루병"],date:"2013-03-04"},
+  {name:"멀티샷",code:"사1",ingr:"Hexaconazole",type:"살균",targets:["흰가루병"],date:"2013-02-21"},
+  {name:"폴리비전",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["노균병", "흰가루병"],date:"2013-02-21"},
+  {name:"빅스톤",code:"29+4c",ingr:"Flonicamid+Sulfoxaflor",type:"살충",targets:["목화진딧물"],date:"2013-02-05"},
+  {name:"아리에이블",code:"6",ingr:"Emamectin benzoate",type:"살충",targets:["꽃노랑총채벌레"],date:"2012-12-06"},
+  {name:"버클리",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"2012-12-06"},
+  {name:"강써브",code:"3a",ingr:"Bifenthrin",type:"살충",targets:["목화진딧물"],date:"2012-12-04"},
+  {name:"쓰리뷰",code:"사1",ingr:"Hexaconazole",type:"살균",targets:["흰가루병"],date:"2012-12-04"},
+  {name:"래버스",code:"아5",ingr:"Mandipropamid",type:"살균",targets:["노균병"],date:"2012-11-14"},
+  {name:"아미스타탑",code:"다3+사1",ingr:"Azoxystrobin+Difenoconazole",type:"살균",targets:["흰가루병"],date:"2012-11-14"},
+  {name:"오티바",code:"다3",ingr:"Azoxystrobin",type:"살균",targets:["흰가루병", "노균병"],date:"2012-11-14"},
+  {name:"헥코졸",code:"사1",ingr:"Hexaconazole",type:"살균",targets:["흰가루병"],date:"2012-11-06"},
+  {name:"토리치",code:"28",ingr:"Cyantraniliprole",type:"살충",targets:["담배가루이"],date:"2012-10-31"},
+  {name:"옵션",code:"사1+나6",ingr:"Difenoconazole+Pyriofenone",type:"살균",targets:["흰가루병"],date:"2012-10-31"},
+  {name:"피리오",code:"다2+나6",ingr:"Boscalid+Pyriofenone",type:"살균",targets:["흰가루병"],date:"2012-10-31"},
+  {name:"전담마크",code:"아4+나6",ingr:"Polyoxin D+Pyriofenone",type:"살균",targets:["흰가루병"],date:"2012-10-31"},
+  {name:"이차메",code:"3a",ingr:"Bifenthrin",type:"살충",targets:["목화진딧물"],date:"2012-07-23"},
+  {name:"유일스피드",code:"아5",ingr:"Dimethomorph",type:"살균",targets:["노균병"],date:"2012-07-05"},
+  {name:"백마탄",code:"사1+나6",ingr:"Difenoconazole+Metrafenone",type:"살균",targets:["흰가루병"],date:"2012-06-25"},
+  {name:"코모도",code:"4a",ingr:"Imidacloprid",type:"살충",targets:["목화진딧물"],date:"2012-04-27"},
+  {name:"대승",code:"다2+다3",ingr:"Penthiopyrad+Picoxystrobin",type:"살균",targets:["흰가루병"],date:"2012-04-09"},
+  {name:"역습",code:"미분류(살균제)",ingr:"Flutianil",type:"살균",targets:["흰가루병"],date:"2012-04-09"},
+  {name:"프로키온",code:"다3",ingr:"Pyraclostrobin",type:"살균",targets:["노균병"],date:"2012-04-09"},
+  {name:"스트레이트",code:"4c",ingr:"Sulfoxaflor",type:"살충",targets:["목화진딧물"],date:"2012-04-09"},
+  {name:"스파르타",code:"4a",ingr:"Acetamiprid",type:"살충",targets:["목화진딧물"],date:"2012-04-09"},
+  {name:"보트리사이드",code:"사3",ingr:"Fenpyrazamine",type:"살균",targets:["잿빛곰팡이병"],date:"2012-04-09"},
+  {name:"버팔로",code:"16+21a",ingr:"Buprofezin+Pyridaben",type:"살충",targets:["담배가루이"],date:"2012-04-09"},
+  {name:"모벤토",code:"23",ingr:"Spirotetramat",type:"살충",targets:["담배가루이", "목화진딧물"],date:"2012-04-09"},
+  {name:"똑소리",code:"4a",ingr:"Clothianidin",type:"살충",targets:["목화진딧물"],date:"2012-03-21"},
+  {name:"적토마",code:"카+아4",ingr:"Iminoctadine tris(albesilate)+Polyoxin B",type:"살균",targets:["흰가루병"],date:"2012-03-21"},
+  {name:"세시미",code:"4a",ingr:"Clothianidin",type:"살충",targets:["목화진딧물", "담배가루이", "꽃노랑총채벌레"],date:"2012-03-21"},
+  {name:"젬프로",code:"다8+아5",ingr:"Ametoctradin+Dimethomorph",type:"살균",targets:["노균병"],date:"2012-02-17"},
+  {name:"팡파레",code:"9b",ingr:"Pyrifluquinazon",type:"살충",targets:["담배가루이"],date:"2012-02-17"},
+  {name:"듬지칸",code:"사1+다3",ingr:"Fluquinconazole+Trifloxystrobin",type:"살균",targets:["흰가루병"],date:"2012-02-02"},
+  {name:"수퍼킥",code:"다3",ingr:"Picoxystrobin",type:"살균",targets:["노균병"],date:"2012-02-02"},
+  {name:"트랜스폼",code:"4c",ingr:"Sulfoxaflor",type:"살충",targets:["목화진딧물"],date:"2011-11-08"},
+  {name:"크린캡",code:"다2",ingr:"Penthiopyrad",type:"살균",targets:["흰가루병"],date:"2011-10-10"},
+  {name:"아칸토",code:"다3",ingr:"Picoxystrobin",type:"살균",targets:["노균병"],date:"2011-05-18"},
+  {name:"검투사",code:"6",ingr:"Lepimectin",type:"살충",targets:["꽃노랑총채벌레"],date:"2011-05-18"},
+  {name:"골든키",code:"다4+다3",ingr:"Amisulbrom+Famoxadone",type:"살균",targets:["노균병"],date:"2011-03-29"},
+  {name:"골기퍼",code:"미분류(살균제)+아5",ingr:"Cymoxanil+Mandipropamid",type:"살균",targets:["노균병"],date:"2011-03-29"},
+  {name:"캐스팅",code:"아5+다3",ingr:"Dimethomorph+Pyraclostrobin",type:"살균",targets:["흰가루병", "노균병"],date:"2011-03-29"},
+  {name:"레이서",code:"15+13",ingr:"Bistrifluron+Chlorfenapyr",type:"살충",targets:["꽃노랑총채벌레"],date:"2011-03-29"},
+  {name:"가루자비",code:"다2+나6",ingr:"Boscalid+Metrafenone",type:"살균",targets:["흰가루병"],date:"2011-03-29"},
+  {name:"매듭",code:"다3+아5",ingr:"Famoxadone+Mandipropamid",type:"살균",targets:["노균병"],date:"2011-03-29"},
+  {name:"램제트",code:"21a",ingr:"Pyridaben",type:"살충",targets:["담배가루이"],date:"2010-10-29"},
+  {name:"집중마크",code:"25a+15",ingr:"Cyenopyrafen+Flufenoxuron",type:"살충",targets:["점박이응애"],date:"2010-10-15"},
+  {name:"볼리암타고",code:"6+28",ingr:"Abamectin+Chlorantraniliprole",type:"살충",targets:["점박이응애", "꽃노랑총채벌레"],date:"2010-04-15"},
+  {name:"토충탄",code:"1b+4a",ingr:"Cadusafos+Imidacloprid",type:"살충",targets:["담배가루이"],date:"2010-03-31"},
+  {name:"차트라",code:"라3+아4",ingr:"Kasugamycin+Polyoxin D",type:"살균",targets:["흰가루병"],date:"2010-03-31"},
+  {name:"천하평정",code:"4a+15",ingr:"Acetamiprid+Diflubenzuron",type:"살충",targets:["목화진딧물"],date:"2010-03-31"},
+  {name:"썬버드",code:"미분류(살충제)+5",ingr:"Pyridalyl+Spinetoram",type:"살충",targets:["꽃노랑총채벌레", "담배가루이"],date:"2010-03-31"},
+  {name:"마법사",code:"사1+아4",ingr:"Difenoconazole+Polyoxin B",type:"살균",targets:["흰가루병"],date:"2010-03-31"},
+  {name:"금관총",code:"4a+5",ingr:"Clothianidin+Spinetoram",type:"살충",targets:["담배가루이", "꽃노랑총채벌레"],date:"2009-09-30"},
+  {name:"당찬",code:"4a+5",ingr:"Acetamiprid+Spinetoram",type:"살충",targets:["꽃노랑총채벌레", "담배가루이"],date:"2009-09-30"},
+  {name:"리치팜",code:"6",ingr:"Emamectin benzoate",type:"살충",targets:["꽃노랑총채벌레"],date:"2009-04-09"},
+  {name:"커튼",code:"다4+미분류(살균제)",ingr:"Amisulbrom+Cymoxanil",type:"살균",targets:["노균병"],date:"2009-03-30"},
+  {name:"델리게이트",code:"5",ingr:"Spinetoram",type:"살충",targets:["꽃노랑총채벌레", "담배가루이"],date:"2009-03-30"},
+  {name:"주무기",code:"14",ingr:"Thiocyclam hydrogen oxalate",type:"살충",targets:["담배가루이"],date:"2009-03-30"},
+  {name:"코드원",code:"20d+23",ingr:"Bifenazate+Spiromesifen",type:"살충",targets:["점박이응애"],date:"2009-03-30"},
+  {name:"보스",code:"4a",ingr:"Dinotefuran",type:"살충",targets:["꽃노랑총채벌레", "담배가루이"],date:"2009-03-30"},
+  {name:"카스텔란",code:"사1",ingr:"Fluquinconazole",type:"살균",targets:["흰가루병"],date:"2009-01-01"},
+  {name:"이카쵸",code:"미분류(살균제)+다3",ingr:"Cymoxanil+Famoxadone",type:"살균",targets:["노균병"],date:"2009-01-01"},
+  {name:"부티나",code:"카",ingr:"Iminoctadine tris(albesilate)",type:"살균",targets:["흰가루병"],date:"2009-01-01"},
+  {name:"탈렌트",code:"카",ingr:"Iminoctadine tris(albesilate)",type:"살균",targets:["흰가루병"],date:"2009-01-01"},
+  {name:"아타라",code:"4a",ingr:"Thiamethoxam",type:"살충",targets:["목화진딧물", "담배가루이"],date:"2009-01-01"},
+  {name:"삼공헥사코나졸",code:"사1",ingr:"Hexaconazole",type:"살균",targets:["흰가루병"],date:"2009-01-01"},
+  {name:"해비치",code:"다3",ingr:"Kresoxim-methyl",type:"살균",targets:["흰가루병", "노균병"],date:"2009-01-01"},
+  {name:"에머넌트",code:"사1",ingr:"Tetraconazole",type:"살균",targets:["흰가루병"],date:"2009-01-01"},
+  {name:"쇼크",code:"25a",ingr:"Cyenopyrafen",type:"살충",targets:["점박이응애"],date:"2008-10-01"},
+  {name:"어코드",code:"3a+4a",ingr:"Etofenprox+Imidacloprid",type:"살충",targets:["목화진딧물"],date:"2008-10-01"},
+  {name:"선방",code:"가1+나3",ingr:"Benalaxyl-M+Ethaboxam",type:"살균",targets:["노균병"],date:"2008-10-01"},
+  {name:"도마크",code:"사1",ingr:"Tetraconazole",type:"살균",targets:["흰가루병"],date:"2008-04-03"},
+  {name:"백승",code:"16+4a",ingr:"Buprofezin+Thiacloprid",type:"살충",targets:["담배가루이"],date:"2008-03-31"},
+  {name:"명작",code:"다4",ingr:"Amisulbrom",type:"살균",targets:["노균병"],date:"2008-03-31"},
+  {name:"병모리",code:"다2+사1",ingr:"Boscalid+Triflumizole",type:"살균",targets:["흰가루병"],date:"2008-03-31"},
+  {name:"파워크린",code:"1b+4a",ingr:"Cadusafos+Clothianidin",type:"살충",targets:["담배가루이", "목화진딧물"],date:"2008-03-31"},
+  {name:"엑설트",code:"5",ingr:"Spinetoram",type:"살충",targets:["꽃노랑총채벌레"],date:"2008-03-31"},
+  {name:"신기루",code:"7c",ingr:"Pyriproxyfen",type:"살충",targets:["온실가루이"],date:"2008-01-01"},
+  {name:"히어로",code:"19+16",ingr:"Amitraz+Buprofezin",type:"살충",targets:["담배가루이"],date:"2008-01-01"},
+  {name:"주움",code:"10b",ingr:"Etoxazole",type:"살충",targets:["점박이응애"],date:"2008-01-01"},
+  {name:"테라스",code:"생2",ingr:"Bacillus subtilis DBB-1501",type:"살균",targets:["흰가루병"],date:"2007-10-01"},
+  {name:"코뿔소",code:"4a",ingr:"Clothianidin",type:"살충",targets:["목화진딧물", "담배가루이"],date:"2007-05-03"},
+  {name:"신궁",code:"아5+카",ingr:"Benthiavalicarb-isopropyl+Copper oxychloride",type:"살균",targets:["노균병"],date:"2007-03-29"},
+  {name:"파워샷",code:"25a",ingr:"Cyflumetofen",type:"살충",targets:["점박이응애"],date:"2007-03-29"},
+  {name:"늘사랑",code:"다3+가1",ingr:"Famoxadone+Metalaxyl-M",type:"살균",targets:["노균병"],date:"2007-03-29"},
+  {name:"귀품",code:"사1+다3",ingr:"Flusilazole+Kresoxim-methyl",type:"살균",targets:["흰가루병"],date:"2007-03-29"},
+  {name:"검객",code:"16+4a",ingr:"Buprofezin+Dinotefuran",type:"살충",targets:["담배가루이"],date:"2007-03-29"},
+  {name:"뉴리더",code:"사1+아4",ingr:"Difenoconazole+Polyoxin D",type:"살균",targets:["흰가루병"],date:"2006-09-29"},
+  {name:"잘류프리",code:"아4",ingr:"Polyoxin D",type:"살균",targets:["흰가루병", "잿빛곰팡이병"],date:"2006-04-19"},
+  {name:"신엑스",code:"4a",ingr:"Acetamiprid",type:"살충",targets:["꽃노랑총채벌레"],date:"2006-03-29"},
+  {name:"인피니트",code:"나5+바4",ingr:"Fluopicolide+Propamocarb hydrochloride",type:"살균",targets:["노균병"],date:"2006-03-29"},
+  {name:"세레나데아소",code:"생2",ingr:"Bacillus subtilis QST-713",type:"살균",targets:["흰가루병"],date:"2006-03-29"},
+  {name:"천하무적",code:"3a+4a",ingr:"Bifenthrin+Imidacloprid",type:"살충",targets:["목화진딧물", "담배가루이", "꽃노랑총채벌레"],date:"2006-03-29"},
+  {name:"아그로톱",code:"18+5",ingr:"Methoxyfenozide+Spinosad",type:"살충",targets:["꽃노랑총채벌레"],date:"2006-03-29"},
+  {name:"인덱스",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"2005-12-14"},
+  {name:"오차드",code:"나3+가1",ingr:"Ethaboxam+Metalaxyl",type:"살균",targets:["노균병"],date:"2005-10-18"},
+  {name:"침투왕",code:"사1",ingr:"Hexaconazole",type:"살균",targets:["흰가루병"],date:"2005-09-30"},
+  {name:"힌트",code:"미분류(살균제)+사1",ingr:"Cyflufenamid+Hexaconazole",type:"살균",targets:["흰가루병"],date:"2005-09-30"},
+  {name:"모스피란",code:"4a",ingr:"Acetamiprid",type:"살충",targets:["목화진딧물", "담배가루이"],date:"2005-09-30"},
+  {name:"실버스타",code:"미분류(살균제)+사1",ingr:"Cyflufenamid+Triflumizole",type:"살균",targets:["흰가루병"],date:"2005-09-30"},
+  {name:"지존",code:"23",ingr:"Spiromesifen",type:"살충",targets:["담배가루이", "점박이응애"],date:"2005-03-29"},
+  {name:"성보탄저박사",code:"사1+사1",ingr:"Fluquinconazole+Prochloraz-manganese",type:"살균",targets:["흰가루병"],date:"2005-03-29"},
+  {name:"포루밀",code:"아5+가1",ingr:"Dimethomorph+Metalaxyl-M",type:"살균",targets:["노균병"],date:"2005-03-29"},
+  {name:"포룸",code:"아5",ingr:"Dimethomorph",type:"살균",targets:["노균병"],date:"2005-03-29"},
+  {name:"총채탄",code:"3a",ingr:"Acrinathrin",type:"살충",targets:["꽃노랑총채벌레"],date:"2005-01-20"},
+  {name:"선문델타린",code:"3a",ingr:"Deltamethrin",type:"살충",targets:["목화진딧물"],date:"2004-04-03"},
+  {name:"자부심",code:"아5+나3",ingr:"Iprovalicarb+Zoxamide",type:"살균",targets:["노균병"],date:"2004-01-30"},
+  {name:"오티바옵티",code:"다3+카",ingr:"Azoxystrobin+Chlorothalonil",type:"살균",targets:["흰가루병", "노균병"],date:"2004-01-30"},
+  {name:"굳타임",code:"나1+사1",ingr:"Thiophanate-methyl+Triflumizole",type:"살균",targets:["흰가루병"],date:"2004-01-16"},
+  {name:"데시스",code:"3a",ingr:"Deltamethrin",type:"살충",targets:["목화진딧물"],date:"2004-01-16"},
+  {name:"트리후민",code:"사1",ingr:"Triflumizole",type:"살균",targets:["흰가루병"],date:"2004-01-16"},
+  {name:"텔루스",code:"나3",ingr:"Ethaboxam",type:"살균",targets:["노균병"],date:"2003-11-10"},
+  {name:"탑시드",code:"바6",ingr:"Paenibacillus polymyxa AC-1",type:"살균",targets:["흰가루병"],date:"2003-03-27"},
+  {name:"칸투스",code:"다2",ingr:"Boscalid",type:"살균",targets:["흰가루병"],date:"2003-02-26"},
+  {name:"오신",code:"4a",ingr:"Dinotefuran",type:"살충",targets:["담배가루이"],date:"2003-01-15"},
+  {name:"팬텀",code:"4a",ingr:"Dinotefuran",type:"살충",targets:["담배가루이"],date:"2003-01-15"},
+  {name:"대포",code:"4a",ingr:"Dinotefuran",type:"살충",targets:["담배가루이"],date:"2003-01-15"},
+  {name:"탐실",code:"카+라1",ingr:"Chlorothalonil+Pyrimethanil",type:"살균",targets:["노균병"],date:"2001-12-19"},
+  {name:"카니발",code:"미분류(살균제)+나3",ingr:"Cymoxanil+Zoxamide",type:"살균",targets:["노균병"],date:"2001-04-04"},
+  {name:"탐스론",code:"라1+사1",ingr:"Mepanipyrim+Myclobutanil",type:"살균",targets:["흰가루병"],date:"2001-04-04"},
+  {name:"아리이미다",code:"4a",ingr:"Imidacloprid",type:"살충",targets:["목화진딧물"],date:"2000-12-27"},
+  {name:"금맥",code:"21a",ingr:"Pyridaben",type:"살충",targets:["담배가루이"],date:"2000-11-30"},
+  {name:"노다지",code:"4a",ingr:"Imidacloprid",type:"살충",targets:["목화진딧물"],date:"2000-06-29"},
+  {name:"마스터프로",code:"6",ingr:"Milbemectin",type:"살충",targets:["점박이응애", "담배가루이"],date:"2000-03-13"},
+  {name:"아크라마이트",code:"20d",ingr:"Bifenazate",type:"살충",targets:["점박이응애"],date:"2000-03-13"},
+  {name:"텔도",code:"사3",ingr:"Fenhexamid",type:"살균",targets:["잿빛곰팡이병"],date:"2000-03-13"},
+  {name:"센다닐",code:"카+미분류(살균제)",ingr:"Chlorothalonil+Cymoxanil",type:"살균",targets:["노균병"],date:"1999-12-29"},
+  {name:"모도우리",code:"나1+사1",ingr:"Thiophanate-methyl+Triflumizole",type:"살균",targets:["흰가루병"],date:"1999-01-27"},
+  {name:"동부훼나리",code:"사1",ingr:"Fenarimol",type:"살균",targets:["흰가루병"],date:"1999-01-27"},
+  {name:"버티맥",code:"6",ingr:"Abamectin",type:"살충",targets:["점박이응애"],date:"1998-12-07"},
+  {name:"충자비",code:"1b",ingr:"Phenthoate",type:"살충",targets:["담배가루이"],date:"1998-05-18"},
+  {name:"장원",code:"3a",ingr:"Deltamethrin",type:"살충",targets:["목화진딧물"],date:"1998-04-01"},
+  {name:"베테랑",code:"4a",ingr:"Imidacloprid",type:"살충",targets:["목화진딧물"],date:"1998-03-18"},
+  {name:"비리아웃",code:"4a",ingr:"Imidacloprid",type:"살충",targets:["목화진딧물"],date:"1998-03-18"},
+  {name:"아리비타놀",code:"사1",ingr:"Bitertanol",type:"살균",targets:["흰가루병"],date:"1997-04-30"},
+  {name:"섹큐어",code:"13",ingr:"Chlorfenapyr",type:"살충",targets:["꽃노랑총채벌레"],date:"1997-02-03"},
+  {name:"렘페이지",code:"13",ingr:"Chlorfenapyr",type:"살충",targets:["꽃노랑총채벌레"],date:"1997-01-28"},
+  {name:"다이토나",code:"3a",ingr:"Fenpropathrin",type:"살충",targets:["담배가루이"],date:"1996-12-06"},
+  {name:"리버티",code:"사1",ingr:"Bitertanol",type:"살균",targets:["흰가루병"],date:"1996-12-06"},
+  {name:"방파제",code:"사1",ingr:"Bitertanol",type:"살균",targets:["흰가루병"],date:"1996-01-27"},
+  {name:"코니도",code:"4a",ingr:"Imidacloprid",type:"살충",targets:["목화진딧물"],date:"1995-08-30"},
+  {name:"피라니카",code:"21a",ingr:"Tebufenpyrad",type:"살충",targets:["점박이응애"],date:"1994-03-30"},
+  {name:"젠토래피드킬",code:"4a",ingr:"Imidacloprid",type:"살충",targets:["목화진딧물"],date:"1994-03-24"},
+  {name:"돌진",code:"1a",ingr:"Benfuracarb",type:"살충",targets:["꽃노랑총채벌레"],date:"1993-04-16"},
+  {name:"코만도",code:"4a",ingr:"Imidacloprid",type:"살충",targets:["목화진딧물"],date:"1993-04-13"},
+  {name:"살비왕",code:"21a",ingr:"Fenpyroximate",type:"살충",targets:["담배가루이"],date:"1993-04-13"},
+  {name:"타스타",code:"3a",ingr:"Bifenthrin",type:"살충",targets:["목화진딧물", "담배가루이"],date:"1992-08-21"},
+  {name:"산마루",code:"21a",ingr:"Pyridaben",type:"살충",targets:["담배가루이"],date:"1992-04-01"},
+  {name:"더마니",code:"아4",ingr:"Polyoxin B",type:"살균",targets:["잿빛곰팡이병"],date:"1989-11-27"},
+  {name:"시스텐",code:"사1",ingr:"Myclobutanil",type:"살균",targets:["흰가루병"],date:"1987-04-15"},
+  {name:"바이코",code:"사1",ingr:"Bitertanol",type:"살균",targets:["흰가루병"],date:"1986-03-22"},
+  {name:"다니톨",code:"3a",ingr:"Fenpropathrin",type:"살충",targets:["담배가루이"],date:"1985-04-25"},
+  {name:"알리에테",code:"차7",ingr:"Fosetyl-aluminium",type:"살균",targets:["노균병"],date:"1984-06-01"},
+  {name:"산요루",code:"카",ingr:"DBEDC",type:"살균",targets:["흰가루병"],date:"1984-06-01"},
+  {name:"엘산",code:"1b",ingr:"Phenthoate",type:"살충",targets:["담배가루이"],date:"1981-03-02"},
+  {name:"데스플러스",code:"3a",ingr:"Deltamethrin",type:"살충",targets:["목화진딧물"],date:"1981-03-02"}
+];
+
+// 교차저항 그룹 (기작코드 → 그룹명)
+const CODE_GROUPS = {
+  "다3":"QoI계(스트로빌루린)", "다2":"SDHI계", "사1":"DMI계(트리아졸/이미다졸)",
+  "나6":"메트라페논계", "아5":"CAA계", "다4":"아미설브롬계",
+  "나5":"플루오피콜라이드계", "바9":"옥사티아피프롤린계",
+  "4a":"네오니코티노이드계", "3a":"피레스로이드계", "1b":"유기인계",
+  "6":"아버멕틴계", "28":"다이아미드계", "23":"테트론산계",
+  "21a":"METI계", "5":"스피노신계", "29":"플로니카미드계",
+  "9b":"피리플루퀴나존계", "9d":"아피도피로펜계", "30":"플룩사메타마이드계",
+  "13":"클로르페나피르계", "16":"뷰프로페진계"
 };
 
-const NAME_TO_GROUP = {};
-Object.entries(CROSS_RESISTANCE).forEach(([g,names]) => names.forEach(n => NAME_TO_GROUP[n]=g));
-const CROPS = ["참외","포도","고추","사과","복숭아","감","대추","자두"];
+function getGroup(code) {
+  for (const [key, val] of Object.entries(CODE_GROUPS)) {
+    if (code === key || code.startsWith(key+"+") || code.endsWith("+"+key) || code.includes("+"+key+"+")) return val;
+  }
+  return code;
+}
 
+const CROPS = ["참외","포도","고추","사과","복숭아","감","대추","자두"];
 let records = JSON.parse(localStorage.getItem('farm_records')||'[]');
-let apiKey = localStorage.getItem('farm_apikey')||'';
-let workerUrl = localStorage.getItem('farm_worker')||'';
 let selectedCrop = '참외';
-let recCrop = '참외';
 let matchedItem = null;
-let debounceTimer = null;
+let recFilter = 'all';
 let deferredPrompt = null;
 
-// PWA 설치
 window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
+  e.preventDefault(); deferredPrompt = e;
   document.getElementById('installBanner').style.display = 'flex';
 });
 
@@ -222,40 +618,15 @@ function installApp() {
   }
 }
 
-// iOS에서 자동으로 설치 안내 표시
 window.onload = function() {
   const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  const isStandalone = window.navigator.standalone;
-  if (isIOS && !isStandalone) {
+  if (isIOS && !window.navigator.standalone) {
     document.getElementById('installBanner').style.display = 'flex';
   }
   document.getElementById('dateInput').value = new Date().toISOString().slice(0,10);
-  renderCropBtns();
-  renderRecCropBtns();
-  if (apiKey && workerUrl) showApiConnected();
-  else showApiSetup();
   renderRecent();
+  renderRecommend();
 };
-
-function saveApiKey() {
-  const k = document.getElementById('apiKeyInput').value.trim();
-  const w = document.getElementById('workerUrlInput').value.trim().replace('https://','').replace(/\/$/,'');
-  if (!k && !w) { showApiConnected(); return; }
-  if (k) { apiKey=k; localStorage.setItem('farm_apikey',k); }
-  if (w) { workerUrl=w; localStorage.setItem('farm_worker',w); }
-  showApiConnected();
-}
-function showApiConnected() {
-  document.getElementById('apiSetup').style.display='none';
-  document.getElementById('apiConnected').style.display='flex';
-}
-function showApiSetup() {
-  document.getElementById('apiSetup').style.display='block';
-  document.getElementById('apiConnected').style.display='none';
-  if (apiKey) document.getElementById('apiKeyInput').value=apiKey;
-  if (workerUrl) document.getElementById('workerUrlInput').value=workerUrl;
-}
-function changeApiKey() { showApiSetup(); }
 
 function showTab(tab) {
   document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active',['record','history','recommend'][i]===tab));
@@ -265,122 +636,62 @@ function showTab(tab) {
   if (tab==='recommend') renderRecommend();
 }
 
-function renderCropBtns() {
-  document.getElementById('cropBtns').innerHTML = CROPS.map(c =>
-    `<button class="crop-btn ${c===selectedCrop?'active':''}" onclick="selectCrop('${c}')">${c}</button>`).join('');
-}
-function selectCrop(c) { selectedCrop=c; renderCropBtns(); checkWarning(); }
-function renderRecCropBtns() {
-  document.getElementById('recCropBtns').innerHTML = CROPS.map(c =>
-    `<button class="crop-btn ${c===recCrop?'active':''}" onclick="selectRecCrop('${c}')">${c}</button>`).join('');
-}
-function selectRecCrop(c) { recCrop=c; renderRecCropBtns(); renderRecommend(); }
-
-async function handleNameInput(val) {
-  matchedItem=null;
+function handleNameInput(val) {
+  matchedItem = null;
   document.getElementById('matchedBox').style.display='none';
-  document.getElementById('saveBtn').disabled=!val;
-  document.getElementById('apiError').style.display='none';
+  document.getElementById('saveBtn').disabled = !val;
   hideWarning();
-  if (!val||val.length<2) { document.getElementById('suggestBox').style.display='none'; return; }
-
-  const localMatch = Object.entries(CROSS_RESISTANCE)
-    .flatMap(([g,names]) => names.filter(n=>n.includes(val)||val.includes(n)).map(n=>({name:n,group:g})))
-    .slice(0,5);
-
-  clearTimeout(debounceTimer);
-  debounceTimer = setTimeout(async () => {
-    if (!apiKey || !workerUrl) {
-      if (localMatch.length) renderLocalSuggestions(localMatch);
-      return;
-    }
-    document.getElementById('searchingText').style.display='block';
-    try {
-      const apiUrl = `https://apis.data.go.kr/1390802/AgriChemService2/getApldcrRegistList2?serviceKey=${encodeURIComponent(apiKey)}&prduct_nm=${encodeURIComponent(val)}&numOfRows=20&pageNo=1&dataType=JSON`;
-      const res = await fetch(`https://${workerUrl}?url=${encodeURIComponent(apiUrl)}`);
-      const json = await res.json();
-      let items = json?.body?.items||json?.response?.body?.items||[];
-      if (!Array.isArray(items)) items=[items];
-      renderSuggestions(items, localMatch);
-    } catch(e) {
-      if (localMatch.length) renderLocalSuggestions(localMatch);
-      else document.getElementById('suggestBox').style.display='none';
-    }
-    document.getElementById('searchingText').style.display='none';
-  }, 500);
-}
-
-function renderLocalSuggestions(locals) {
+  if (!val || val.length < 1) { document.getElementById('suggestBox').style.display='none'; return; }
+  
+  const hits = PESTICIDE_DB.filter(p => p.name.includes(val) || val.includes(p.name)).slice(0,10);
   const box = document.getElementById('suggestBox');
-  box.innerHTML = locals.map(p =>
-    `<div class="suggest-item" onclick="selectLocalSuggestion('${p.name}','${p.group}')">
-      <span class="suggest-code">${p.group}</span>
-      <div class="suggest-name">${p.name}</div>
-      <div class="suggest-sub">내장 DB</div>
-    </div>`).join('');
-  box.style.display='block';
-}
-
-function selectLocalSuggestion(name, group) {
-  matchedItem={name,code:group,group,mainComp:''};
-  document.getElementById('nameInput').value=name;
-  document.getElementById('suggestBox').style.display='none';
-  document.getElementById('saveBtn').disabled=false;
-  document.getElementById('matchedBox').innerHTML=`<div class="tag"><div class="tag-label">기작</div><div class="tag-value" style="color:#58a6ff">${group}</div></div>`;
-  document.getElementById('matchedBox').style.display='flex';
-  checkWarning();
-}
-
-function renderSuggestions(items, localMatch) {
-  const box = document.getElementById('suggestBox');
-  const seen = new Set();
-  const uniq = items.filter(i=>{const nm=i.prduct_nm||''; if(!nm||seen.has(nm)) return false; seen.add(nm); return true;}).slice(0,8);
-  let html = uniq.map((item,i) => {
-    const name=item.prduct_nm||'', comp=item.ingr_nm||'', code=item.actn_mchnsm_code||'';
-    return `<div class="suggest-item" onclick="selectApiSuggestion(${i})">
-      ${code?`<span class="suggest-code">${code}</span>`:''}
-      <div class="suggest-name">${name}</div>
-      ${comp?`<div class="suggest-sub">${comp}</div>`:''}
-    </div>`;
+  if (!hits.length) { box.style.display='none'; return; }
+  
+  const isNew = (d) => d >= '2022-01-01';
+  box.innerHTML = hits.map((p,i) => {
+    const newBadge = isNew(p.date) ? '<span class="suggest-new">NEW</span>' : '';
+    return \`<div class="suggest-item" onclick="selectPesticide(\${i},\${JSON.stringify(hits).replace(/"/g,'&quot;')})">
+      <span class="suggest-code">\${p.code}</span>
+      <div class="suggest-name">\${p.name} \${newBadge}</div>
+      <div class="suggest-sub">\${p.ingr} · \${p.targets.join(', ')}</div>
+      <div class="suggest-date">등록일 \${p.date}</div>
+    </div>\`;
   }).join('');
-  localMatch.filter(p=>!seen.has(p.name)).forEach(p => {
-    html+=`<div class="suggest-item" onclick="selectLocalSuggestion('${p.name}','${p.group}')">
-      <span class="suggest-code">${p.group}</span>
-      <div class="suggest-name">${p.name}</div>
-      <div class="suggest-sub">내장 DB</div>
-    </div>`;
-  });
-  if (!html) { box.style.display='none'; return; }
-  box.innerHTML=html; box._items=uniq; box.style.display='block';
+  box._hits = hits;
+  box.style.display = 'block';
 }
 
-function selectApiSuggestion(i) {
-  const box=document.getElementById('suggestBox');
-  const item=box._items[i];
-  matchedItem={name:item.prduct_nm||'',mainComp:item.ingr_nm||'',code:item.actn_mchnsm_code||'',group:item.actn_mchnsm_nm||''};
-  document.getElementById('nameInput').value=matchedItem.name;
-  box.style.display='none';
-  document.getElementById('saveBtn').disabled=false;
-  document.getElementById('matchedBox').innerHTML=`
-    ${matchedItem.code?`<div class="tag"><div class="tag-label">기작코드</div><div class="tag-value" style="color:#58a6ff">${matchedItem.code}</div></div>`:''}
-    ${matchedItem.group?`<div class="tag"><div class="tag-label">작용기작</div><div class="tag-value" style="color:#a78bfa">${matchedItem.group}</div></div>`:''}
-    ${matchedItem.mainComp?`<div class="tag"><div class="tag-label">주성분</div><div class="tag-value" style="color:#8b949e">${matchedItem.mainComp}</div></div>`:''}`;
-  document.getElementById('matchedBox').style.display='flex';
+function selectPesticide(i, hits) {
+  const p = document.getElementById('suggestBox')._hits[i];
+  matchedItem = p;
+  document.getElementById('nameInput').value = p.name;
+  document.getElementById('suggestBox').style.display = 'none';
+  document.getElementById('saveBtn').disabled = false;
+  const isNew = p.date >= '2022-01-01';
+  document.getElementById('matchedBox').innerHTML = \`
+    <div class="tag"><div class="tag-label">기작코드</div><div class="tag-value" style="color:#58a6ff">\${p.code}</div></div>
+    <div class="tag"><div class="tag-label">계통</div><div class="tag-value" style="color:#a78bfa">\${getGroup(p.code)}</div></div>
+    <div class="tag"><div class="tag-label">등록일</div><div class="tag-value" style="color:\${isNew?'#4ade80':'#8b949e'}">\${p.date}\${isNew?' 🆕':''}</div></div>
+    <div class="tag"><div class="tag-label">대상병해충</div><div class="tag-value" style="color:#e6edf3;font-size:11px">\${p.targets.join(', ')}</div></div>
+  \`;
+  document.getElementById('matchedBox').style.display = 'flex';
   checkWarning();
 }
 
 function checkWarning() {
   if (!matchedItem) { hideWarning(); return; }
-  const myGroup=NAME_TO_GROUP[matchedItem.name]||(matchedItem.code?`CODE-${matchedItem.code}`:null);
-  if (!myGroup) { hideWarning(); return; }
-  const prev=records.filter(r=>{
-    if (r.crop!==selectedCrop) return false;
-    const rg=NAME_TO_GROUP[r.name]||(r.code?`CODE-${r.code}`:null);
-    return rg===myGroup;
+  const myGroup = getGroup(matchedItem.code);
+  const prev = records.filter(r => {
+    if (r.crop !== selectedCrop) return false;
+    return getGroup(r.code) === myGroup;
   });
-  if (prev.length>=1) {
-    const prevNames=[...new Set(prev.map(r=>r.name))].slice(0,3).join(', ');
-    showWarning(`교차저항 위험! (${prev.length+1}회 연속)`,`${myGroup} 계통 — 이전: ${prevNames}`,'같은 계통은 교차저항 발생! 다른 기작으로 교체하세요.');
+  if (prev.length >= 1) {
+    const prevNames = [...new Set(prev.map(r=>r.name))].slice(0,3).join(', ');
+    showWarning(
+      \`⚠️ 교차저항 위험! (\${prev.length+1}회 연속)\`,
+      \`\${myGroup} 계통 — 이전 사용: \${prevNames}\`,
+      '같은 계통 약제는 교차저항 발생! 다른 기작으로 교체하세요.'
+    );
   } else hideWarning();
 }
 
@@ -393,11 +704,18 @@ function showWarning(t,t2,t3) {
 function hideWarning() { document.getElementById('warningBox').style.display='none'; }
 
 function saveRecord() {
-  const name=document.getElementById('nameInput').value.trim();
+  const name = document.getElementById('nameInput').value.trim();
   if (!name) return;
-  const rec={id:Date.now(),name,crop:selectedCrop,date:document.getElementById('dateInput').value,target:document.getElementById('targetInput').value,code:matchedItem?.code||'미상',group:matchedItem?.group||'미분류',mainComp:matchedItem?.mainComp||'',crossGroup:NAME_TO_GROUP[name]||matchedItem?.code||''};
+  const p = matchedItem || PESTICIDE_DB.find(x => x.name === name);
+  const rec = {
+    id: Date.now(), name, crop: selectedCrop,
+    date: document.getElementById('dateInput').value,
+    target: document.getElementById('targetInput').value,
+    code: p?.code||'미상', ingr: p?.ingr||'',
+    type: p?.type||'', regDate: p?.date||''
+  };
   records.unshift(rec);
-  localStorage.setItem('farm_records',JSON.stringify(records));
+  localStorage.setItem('farm_records', JSON.stringify(records));
   document.getElementById('nameInput').value='';
   document.getElementById('targetInput').value='';
   document.getElementById('matchedBox').style.display='none';
@@ -407,69 +725,127 @@ function saveRecord() {
 }
 
 function renderRecent() {
-  const el=document.getElementById('recentRecords');
+  const el = document.getElementById('recentRecords');
   if (!records.length) { el.innerHTML=''; return; }
-  el.innerHTML='<div class="label">최근 기록</div>'+records.slice(0,3).map(r=>recordCardHtml(r)).join('');
+  el.innerHTML = '<div class="label" style="margin-bottom:8px">최근 기록</div>' + records.slice(0,3).map(r=>recordHtml(r)).join('');
 }
 
-function recordCardHtml(r,compact=false) {
-  return `<div class="record-card">
+function recordHtml(r, compact=false) {
+  const isNew = r.regDate >= '2022-01-01';
+  return \`<div class="record-card">
     <div style="flex:1;min-width:0">
-      <div class="record-name">${r.name}</div>
-      ${!compact?`<div class="record-sub">${r.crop} · ${r.target||'방제대상 미입력'}</div>`:''}
-      ${r.mainComp?`<div class="record-sub">${r.mainComp}</div>`:''}
-      <div class="record-sub">${r.date}</div>
+      <div class="record-name">\${r.name}\${isNew?'<span class="new-badge">NEW</span>':''}</div>
+      \${!compact?\`<div class="record-sub">\${r.crop} · \${r.target||'방제대상 미입력'}</div>\`:''}
+      \${r.ingr?\`<div class="record-sub">\${r.ingr}</div>\`:''}
+      <div class="record-sub">\${r.date}</div>
     </div>
     <div style="text-align:right;flex-shrink:0">
-      ${r.code&&r.code!=='미상'?`<div class="record-code">${r.code}</div>`:''}
-      <div style="font-size:10px;color:#8b949e">${r.crossGroup||r.group}</div>
+      \${r.code&&r.code!=='미상'?\`<div class="record-code">\${r.code}</div>\`:''}
+      <div style="font-size:10px;color:#8b949e">\${getGroup(r.code)}</div>
     </div>
-  </div>`;
+  </div>\`;
 }
 
 function renderHistory() {
-  const search=document.getElementById('searchInput')?.value||'';
-  const el=document.getElementById('historyContent');
+  const search = document.getElementById('searchInput')?.value||'';
+  const el = document.getElementById('historyContent');
   if (!records.length) { el.innerHTML='<div class="empty">아직 기록이 없습니다.</div>'; return; }
-  let html='';
-  CROPS.forEach(crop=>{
-    const cr=records.filter(r=>r.crop===crop&&(!search||r.name.includes(search)||r.code.includes(search)||(r.crossGroup&&r.crossGroup.includes(search))));
-    if (!cr.length) return;
-    const cgc={};
-    cr.forEach(r=>{const g=r.crossGroup||r.code; if(g) cgc[g]=(cgc[g]||0)+1;});
-    const dangers=Object.entries(cgc).filter(([,v])=>v>=2);
-    html+=`<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div style="font-weight:700;font-size:15px">${crop}</div>${dangers.length?`<div class="danger-badge">⚠️ 교차저항 ${dangers.length}건</div>`:''}</div>`;
-    Object.entries(cgc).sort((a,b)=>b[1]-a[1]).forEach(([code,cnt])=>{
-      const color=cnt>=2?'#f87171':'#58a6ff';
-      html+=`<div class="bar-row"><div class="bar-label">${code}</div><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(cnt*25,100)}%;background:${color}"></div></div><div style="font-size:12px;color:${color};width:24px">${cnt}회</div></div>`;
-    });
-    cr.slice(0,3).forEach(r=>{html+=recordCardHtml(r,true);});
-    if(cr.length>3) html+=`<div style="text-align:center;color:#8b949e;font-size:12px;margin-top:6px">+${cr.length-3}건 더</div>`;
-    html+='</div>';
+  const cr = records.filter(r => !search || r.name.includes(search) || r.code.includes(search));
+  if (!cr.length) { el.innerHTML='<div class="empty">검색 결과 없음</div>'; return; }
+  
+  // 기작별 카운트
+  const cgc={};
+  cr.forEach(r => { const g=getGroup(r.code); cgc[g]=(cgc[g]||0)+1; });
+  const dangers = Object.entries(cgc).filter(([,v])=>v>=2);
+  
+  let html = '';
+  if (dangers.length) {
+    html += \`<div style="background:#2d1010;border:1px solid #f87171;border-radius:10px;padding:10px 14px;margin-bottom:12px">
+      <div style="color:#f87171;font-weight:700;font-size:13px;margin-bottom:6px">⚠️ 교차저항 위험 계통</div>
+      \${dangers.map(([g,cnt])=>\`<div style="font-size:12px;color:#fca5a5;margin-bottom:3px">• \${g} — \${cnt}회 사용</div>\`).join('')}</div>\`;
+  }
+  
+  Object.entries(cgc).sort((a,b)=>b[1]-a[1]).forEach(([group,cnt]) => {
+    const color = cnt>=2?'#f87171':'#58a6ff';
+    html += \`<div class="bar-row">
+      <div class="bar-label" title="\${group}">\${group.split('(')[0]}</div>
+      <div class="bar-bg"><div class="bar-fill" style="width:\${Math.min(cnt*20,100)}%;background:\${color}"></div></div>
+      <div style="font-size:12px;color:\${color};width:24px">\${cnt}회</div>
+    </div>\`;
   });
-  el.innerHTML=html||'<div class="empty">검색 결과가 없습니다.</div>';
+  
+  html += '<div style="margin-top:12px">';
+  cr.slice(0,20).forEach(r => { html += recordHtml(r, true); });
+  if (cr.length>20) html += \`<div style="text-align:center;color:#8b949e;font-size:12px;margin-top:6px">+\${cr.length-20}건 더</div>\`;
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function setRecFilter(f) {
+  recFilter = f;
+  document.querySelectorAll('.filter-btn').forEach((b,i) => b.classList.toggle('active',['all','fungicide','insecticide','new'][i]===f));
+  renderRecommend();
 }
 
 function renderRecommend() {
-  const el=document.getElementById('recommendContent');
-  const cr=records.filter(r=>r.crop===recCrop);
-  const cgc={};
-  cr.forEach(r=>{const g=r.crossGroup||r.code; if(g) cgc[g]=(cgc[g]||0)+1;});
-  const dangers=Object.entries(cgc).filter(([,v])=>v>=2);
-  let html='';
-  if(dangers.length){
-    html+=`<div style="background:#2d1010;border:1px solid #f87171;border-radius:10px;padding:10px 14px;margin-bottom:14px"><div style="color:#f87171;font-weight:700;font-size:13px;margin-bottom:6px">⚠️ ${recCrop} 교차저항 위험</div>${dangers.map(([g,cnt])=>`<div style="font-size:12px;color:#fca5a5;margin-bottom:3px">• ${g} — ${cnt}회 (교체 필요)</div>`).join('')}</div>`;
-  }
-  html+=`<div class="section-title">🔄 ${recCrop} — 계통별 추천</div>`;
-  Object.entries(CROSS_RESISTANCE).forEach(([group,names])=>{
-    const used=cgc[group]||0;
-    const bc=used===0?'#1f3a5f':used>=2?'#3d1a1a':'#21262d';
-    const tc=used===0?'#58a6ff':used>=2?'#f87171':'#fbbf24';
-    const badge=used===0?'✅ 미사용':used>=2?'⚠️ 교체필요':'사용중';
-    html+=`<div class="rec-card" style="border:1px solid ${bc}"><div style="flex:1"><div style="font-size:12px;color:${tc};font-weight:700;margin-bottom:4px">${group} ${badge}</div><div style="font-size:12px;color:#8b949e">${names.slice(0,4).join(' · ')}${names.length>4?'…':''}</div></div><div style="font-size:11px;color:#8b949e;margin-left:8px">${used}회</div></div>`;
+  const el = document.getElementById('recommendContent');
+  const usedGroups = {};
+  records.forEach(r => { const g=getGroup(r.code); usedGroups[g]=(usedGroups[g]||0)+1; });
+  
+  let filtered = [...PESTICIDE_DB];
+  if (recFilter==='fungicide') filtered = filtered.filter(p=>p.type==='살균');
+  else if (recFilter==='insecticide') filtered = filtered.filter(p=>p.type==='살충');
+  else if (recFilter==='new') filtered = filtered.filter(p=>p.date>='2022-01-01');
+  
+  // 점수 계산: 미사용기작 + 신약 우선
+  const scored = filtered.map(p => {
+    const g = getGroup(p.code);
+    const used = usedGroups[g] || 0;
+    const isNew = p.date >= '2022-01-01' ? 1 : 0;
+    const isFresh = p.date >= '2024-01-01' ? 1 : 0;
+    const score = (used===0?100:used===1?50:0) + isNew*30 + isFresh*20;
+    return {...p, score, used, group: g};
+  }).sort((a,b) => b.score-a.score || b.date.localeCompare(a.date));
+  
+  // 상위 30개만 표시
+  const top = scored.slice(0,30);
+  
+  if (!top.length) { el.innerHTML='<div class="empty">결과 없음</div>'; return; }
+  
+  let html = '';
+  top.forEach(p => {
+    const bc = p.used===0?'#1f3a5f':p.used>=2?'#3d1a1a':'#21262d';
+    const tc = p.used===0?'#58a6ff':p.used>=2?'#f87171':'#fbbf24';
+    const badge = p.used===0?'✅ 미사용':p.used>=2?'⚠️ 주의':'사용중';
+    const isNew = p.date >= '2022-01-01';
+    const isFresh = p.date >= '2024-01-01';
+    html += \`<div class="rec-card" style="border:1px solid \${bc}">
+      <div style="flex:1;min-width:0">
+        <div style="font-size:14px;font-weight:700;margin-bottom:3px">
+          \${p.name}
+          \${isFresh?'<span style="font-size:10px;color:#4ade80;background:#1a3a1a;padding:1px 5px;border-radius:4px;margin-left:4px">2024+</span>':
+            isNew?'<span style="font-size:10px;color:#f59e0b;background:#2a2010;padding:1px 5px;border-radius:4px;margin-left:4px">NEW</span>':''
+          }
+        </div>
+        <div style="font-size:11px;color:#8b949e">\${p.ingr}</div>
+        <div style="font-size:11px;color:#6e7681;margin-top:2px">\${p.targets.join(' · ')}</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0;margin-left:8px">
+        <div style="font-size:11px;background:#1a2332;color:#58a6ff;padding:2px 7px;border-radius:8px;margin-bottom:3px">\${p.code}</div>
+        <div style="font-size:10px;color:\${tc}">\${badge}</div>
+        <div style="font-size:10px;color:#6e7681">\${p.used}회 사용</div>
+      </div>
+    </div>\`;
   });
-  html+=`<div class="guide-box"><div style="font-weight:700;margin-bottom:8px">📌 교차저항 원칙</div>${["같은 계통 약제는 상표명 달라도 교차저항 발생","동일 계통 연속 2회 이상 사용 금지","저항성 높은 계통은 시즌 2~3회 이하","M계(무기황·동·만코제브) 혼용으로 저항성 억제"].map((t,i)=>`<div class="guide-item"><span style="color:#58a6ff">${i+1}.</span><span>${t}</span></div>`).join('')}</div>`;
-  el.innerHTML=html;
+  
+  html += \`<div class="guide-box">
+    <div style="font-weight:700;margin-bottom:8px">📌 교차저항 로테이션 원칙</div>
+    \${['같은 계통 약제는 상표명 달라도 교차저항 발생','동일 계통 연속 2회 이상 사용 금지','신약(2022↑) 활용으로 저항성 관리','M계(무기황·동제) 혼용으로 저항성 억제'].map((t,i)=>
+      \`<div style="display:flex;gap:8px;margin-bottom:5px;font-size:12px;color:#8b949e"><span style="color:#58a6ff">\${i+1}.</span><span>\${t}</span></div>\`
+    ).join('')}\`
+  html += '</div>';
+  
+  el.innerHTML = html;
 }
 
 document.addEventListener('click', function(e) {
@@ -478,4 +854,3 @@ document.addEventListener('click', function(e) {
 </script>
 </body>
 </html>
-EOF
