@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="농약관리">
-<title>농약 기작 관리 - 참외</title>
+<title>농약 기작 관리</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: #0d1117; color: #e6edf3; font-family: 'Noto Sans KR', sans-serif; max-width: 500px; margin: 0 auto; padding-bottom: 80px; }
@@ -30,7 +30,7 @@ input, button { font-family: inherit; }
 .crop-btns { display: flex; flex-wrap: wrap; gap: 6px; }
 .crop-btn { padding: 5px 11px; border-radius: 20px; border: 1px solid #30363d; background: transparent; color: #8b949e; font-size: 13px; cursor: pointer; }
 .crop-btn.active { border-color: #58a6ff; background: #1f3a5f; color: #58a6ff; }
-input[type=text], input[type=date] { width: 100%; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 9px 12px; color: #e6edf3; font-size: 14px; }
+input[type=text], input[type=date] { width: 100%; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 10px 12px; color: #e6edf3; font-size: 14px; }
 input:focus { outline: none; border-color: #58a6ff; }
 .pos-rel { position: relative; }
 .suggest-box { position: absolute; top: 100%; left: 0; right: 0; background: #1c2128; border: 1px solid #30363d; border-radius: 8px; z-index: 10; max-height: 300px; overflow-y: auto; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
@@ -39,35 +39,32 @@ input:focus { outline: none; border-color: #58a6ff; }
 .suggest-name { font-size: 14px; font-weight: 600; }
 .suggest-sub { font-size: 11px; color: #8b949e; margin-top: 2px; }
 .suggest-code { font-size: 11px; color: #58a6ff; background: #1a2332; padding: 2px 7px; border-radius: 8px; float: right; margin-left: 6px; }
-.suggest-date { font-size: 10px; color: #4ade80; }
-.suggest-new { font-size: 10px; color: #f59e0b; font-weight: 700; }
-.matched-box { background: #1a2332; border: 1px solid #21262d; border-radius: 8px; padding: 10px 12px; margin-top: 8px; display: flex; gap: 14px; flex-wrap: wrap; }
+.fun-tag { font-size: 10px; color: #4ade80; background: #1a3a1a; padding: 1px 5px; border-radius: 4px; margin-right: 4px; }
+.ins-tag { font-size: 10px; color: #f59e0b; background: #2a1f0a; padding: 1px 5px; border-radius: 4px; margin-right: 4px; }
+.matched-box { background: #1a2332; border: 1px solid #21262d; border-radius: 8px; padding: 10px 12px; margin-top: 8px; display: flex; gap: 12px; flex-wrap: wrap; }
 .tag { display: flex; flex-direction: column; gap: 2px; }
 .tag-label { font-size: 10px; color: #8b949e; }
 .tag-value { font-size: 12px; font-weight: 700; }
-.btn-save { width: 100%; padding: 12px; background: linear-gradient(135deg,#1d4ed8,#2563eb); color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 12px; }
+.btn-save { width: 100%; padding: 13px; background: linear-gradient(135deg,#1d4ed8,#2563eb); color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 12px; }
 .btn-save:disabled { background: #21262d; color: #6e7681; cursor: default; }
 .warning { background: linear-gradient(135deg,#3d1a1a,#2d1010); border: 1px solid #f87171; border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; display: flex; gap: 10px; }
-.warning-icon { font-size: 20px; }
 .warning-title { color: #f87171; font-weight: 700; font-size: 14px; }
 .warning-text { color: #fca5a5; font-size: 12px; margin-top: 2px; }
 .record-card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 10px 12px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
 .record-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
 .record-sub { font-size: 11px; color: #8b949e; }
 .record-code { font-size: 11px; background: #1a2332; color: #58a6ff; padding: 2px 8px; border-radius: 10px; margin-bottom: 3px; }
+.section-title { font-size: 13px; font-weight: 700; margin-bottom: 8px; padding: 6px 10px; border-radius: 8px; }
+.empty { text-align: center; color: #8b949e; padding: 40px 0; font-size: 14px; }
+.filter-btns { display: flex; gap: 6px; margin-bottom: 12px; }
+.filter-btn { flex: 1; padding: 7px; border-radius: 8px; border: 1px solid #30363d; background: transparent; color: #8b949e; font-size: 12px; cursor: pointer; font-weight: 600; text-align: center; }
+.filter-btn.active { border-color: #58a6ff; background: #1f3a5f; color: #58a6ff; }
+.guide-box { background: #161b22; border: 1px solid #21262d; border-radius: 12px; padding: 14px; margin-top: 16px; }
 .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
 .bar-label { width: 65px; font-size: 10px; color: #8b949e; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex-shrink: 0; }
 .bar-bg { flex: 1; background: #21262d; border-radius: 4px; height: 13px; overflow: hidden; }
 .bar-fill { height: 100%; border-radius: 4px; }
 .rec-card { background: #0d1117; border-radius: 8px; padding: 10px 12px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
-.section-title { font-size: 13px; font-weight: 700; color: #58a6ff; margin-bottom: 8px; }
-.empty { text-align: center; color: #8b949e; padding: 40px 0; font-size: 14px; }
-.danger-badge { background: #3d1a1a; color: #f87171; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
-.new-badge { background: #1a3a1a; color: #4ade80; font-size: 10px; padding: 1px 6px; border-radius: 6px; font-weight: 700; margin-left: 4px; }
-.guide-box { background: #161b22; border: 1px solid #21262d; border-radius: 12px; padding: 14px; margin-top: 16px; }
-.filter-btns { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
-.filter-btn { padding: 4px 10px; border-radius: 16px; border: 1px solid #30363d; background: transparent; color: #8b949e; font-size: 12px; cursor: pointer; }
-.filter-btn.active { border-color: #58a6ff; background: #1f3a5f; color: #58a6ff; }
 </style>
 </head>
 <body>
@@ -75,7 +72,7 @@ input:focus { outline: none; border-color: #58a6ff; }
 <div class="header">
   <div class="header-sub">PESTICIDE ROTATION MANAGER</div>
   <div class="header-title">🌿 농약 기작 관리</div>
-  <div class="header-desc">농진청 등록 데이터 기반 · 참외 전용 · 2026년 업데이트</div>
+  <div class="header-desc">농진청 등록 424종 · 2026년 최신 데이터</div>
 </div>
 
 <div id="installBanner" class="install-banner">
@@ -88,10 +85,10 @@ input:focus { outline: none; border-color: #58a6ff; }
 
 <div id="iosGuide" class="ios-guide">
   <div style="font-size:13px;font-weight:700;color:#58a6ff;margin-bottom:8px">📲 iPhone 홈화면 추가 방법</div>
-  <div style="font-size:12px;color:#8b949e;line-height:1.8">
+  <div style="font-size:12px;color:#8b949e;line-height:1.9">
     1️⃣ Safari 하단 <strong style="color:#e6edf3">공유버튼(□↑)</strong> 탭<br>
     2️⃣ <strong style="color:#e6edf3">"홈 화면에 추가"</strong> 선택<br>
-    3️⃣ <strong style="color:#e6edf3">"추가"</strong> 클릭 → 🌿 아이콘 생성!
+    3️⃣ <strong style="color:#e6edf3">"추가"</strong> 클릭
   </div>
   <button onclick="document.getElementById('iosGuide').style.display='none'" style="margin-top:10px;background:none;border:1px solid #30363d;color:#8b949e;padding:5px 12px;border-radius:6px;font-size:12px;cursor:pointer">닫기</button>
 </div>
@@ -104,7 +101,7 @@ input:focus { outline: none; border-color: #58a6ff; }
 
 <div id="tab-record" class="page active">
   <div id="warningBox" style="display:none" class="warning">
-    <div class="warning-icon">⚠️</div>
+    <div style="font-size:20px">⚠️</div>
     <div>
       <div class="warning-title" id="warningTitle"></div>
       <div class="warning-text" id="warningText"></div>
@@ -112,16 +109,18 @@ input:focus { outline: none; border-color: #58a6ff; }
     </div>
   </div>
   <div class="card">
+    <div class="label">🌾 작물</div>
+    <div class="crop-btns" id="cropBtns"></div>
     <div class="label">📅 날짜</div>
     <input type="date" id="dateInput">
-    <div class="label">💊 상표명 검색 <span style="font-size:10px;color:#4ade80;font-weight:400">(농진청 등록 424종)</span></div>
+    <div class="label">💊 농약 입력 <span style="font-size:10px;color:#4ade80;font-weight:400">(상표명 입력하면 자동 검색)</span></div>
     <div class="pos-rel">
-      <input type="text" id="nameInput" placeholder="상표명 입력 (예: 오티바, 코니도, 캡틴)" oninput="handleNameInput(this.value)" autocomplete="off">
+      <input type="text" id="nameInput" placeholder="예: 캡틴, 오티바, 코니도..." oninput="handleNameInput(this.value)" autocomplete="off">
       <div class="suggest-box" id="suggestBox" style="display:none"></div>
     </div>
     <div id="matchedBox" class="matched-box" style="display:none"></div>
     <div class="label">🎯 방제 대상</div>
-    <input type="text" id="targetInput" placeholder="예: 흰가루병, 진딧물">
+    <input type="text" id="targetInput" placeholder="예: 흰가루병, 총채벌레">
     <button class="btn-save" id="saveBtn" onclick="saveRecord()" disabled>✅ 기록 저장</button>
   </div>
   <div id="recentRecords"></div>
@@ -134,13 +133,13 @@ input:focus { outline: none; border-color: #58a6ff; }
 
 <div id="tab-recommend" class="page">
   <div style="background:#161b22;border:1px solid #21262d;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#8b949e">
-    💡 사용 이력 기반 <span style="color:#58a6ff;font-weight:600">미사용 기작 우선</span> + <span style="color:#4ade80;font-weight:600">신약(2022년↑) 우선</span> 추천
+    💡 사용 이력 기반 <span style="color:#58a6ff;font-weight:600">미사용 기작 우선</span> + <span style="color:#4ade80;font-weight:600">신약 우선</span> 상품명 추천
   </div>
   <div class="filter-btns">
     <button class="filter-btn active" onclick="setRecFilter('all')">전체</button>
-    <button class="filter-btn" onclick="setRecFilter('fungicide')">살균제</button>
-    <button class="filter-btn" onclick="setRecFilter('insecticide')">살충제</button>
-    <button class="filter-btn" onclick="setRecFilter('new')">신약만</button>
+    <button class="filter-btn" onclick="setRecFilter('fun')">🍄 살균제</button>
+    <button class="filter-btn" onclick="setRecFilter('ins')">🐛 살충제</button>
+    <button class="filter-btn" onclick="setRecFilter('new')">🆕 신약</button>
   </div>
   <div id="recommendContent"></div>
 </div>
@@ -573,19 +572,20 @@ const PESTICIDE_DB = [
   {name:"데스플러스",code:"3a",ingr:"Deltamethrin",type:"살충",targets:["목화진딧물"],date:"1981-03-02"}
 ];
 
-// 교차저항 그룹 (기작코드 → 그룹명)
 const CODE_GROUPS = {
-  "다3":"QoI계(스트로빌루린)", "다2":"SDHI계", "사1":"DMI계(트리아졸/이미다졸)",
-  "나6":"메트라페논계", "아5":"CAA계", "다4":"아미설브롬계",
-  "나5":"플루오피콜라이드계", "바9":"옥사티아피프롤린계",
-  "4a":"네오니코티노이드계", "3a":"피레스로이드계", "1b":"유기인계",
-  "6":"아버멕틴계", "28":"다이아미드계", "23":"테트론산계",
-  "21a":"METI계", "5":"스피노신계", "29":"플로니카미드계",
-  "9b":"피리플루퀴나존계", "9d":"아피도피로펜계", "30":"플룩사메타마이드계",
-  "13":"클로르페나피르계", "16":"뷰프로페진계"
+  "다3":"QoI계(스트로빌루린)","다2":"SDHI계","사1":"DMI계(트리아졸)",
+  "나6":"메트라페논계","아5":"CAA계","다4":"아미설브롬계",
+  "나5":"플루오피콜라이드계","바9":"옥사티아피프롤린계","마2":"페닐피롤계",
+  "4a":"네오니코티노이드계","3a":"피레스로이드계","1b":"유기인계","1a":"카바메이트계",
+  "6":"아버멕틴계","28":"다이아미드계","23":"테트론산계",
+  "21a":"METI계","5":"스피노신계","29":"플로니카미드계",
+  "9b":"피리플루퀴나존계","9d":"아피도피로펜계","30":"플룩사메타마이드계",
+  "13":"클로르페나피르계","16":"뷰프로페진계","33":"아시노나피르계",
+  "25a":"시에노피라펜계","10b":"에톡사졸계","34":"플로메토퀸계","22a":"옥사디아진계"
 };
 
 function getGroup(code) {
+  if (!code || code === "미상") return "미분류";
   for (const [key, val] of Object.entries(CODE_GROUPS)) {
     if (code === key || code.startsWith(key+"+") || code.endsWith("+"+key) || code.includes("+"+key+"+")) return val;
   }
@@ -593,263 +593,349 @@ function getGroup(code) {
 }
 
 const CROPS = ["참외","포도","고추","사과","복숭아","감","대추","자두"];
-let records = JSON.parse(localStorage.getItem('farm_records')||'[]');
-let selectedCrop = '참외';
+let records = JSON.parse(localStorage.getItem("farm_records")||"[]");
+let selectedCrop = "참외";
 let matchedItem = null;
-let recFilter = 'all';
+let recFilter = "all";
 let deferredPrompt = null;
 
-window.addEventListener('beforeinstallprompt', (e) => {
+window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault(); deferredPrompt = e;
-  document.getElementById('installBanner').style.display = 'flex';
+  document.getElementById("installBanner").style.display = "flex";
 });
 
 function installApp() {
   const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
   if (isIOS) {
-    document.getElementById('iosGuide').style.display = 'block';
-    document.getElementById('installBanner').style.display = 'none';
+    document.getElementById("iosGuide").style.display = "block";
+    document.getElementById("installBanner").style.display = "none";
   } else if (deferredPrompt) {
     deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => {
-      deferredPrompt = null;
-      document.getElementById('installBanner').style.display = 'none';
-    });
+    deferredPrompt.userChoice.then(() => { deferredPrompt = null; document.getElementById("installBanner").style.display = "none"; });
   }
 }
 
 window.onload = function() {
   const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  if (isIOS && !window.navigator.standalone) {
-    document.getElementById('installBanner').style.display = 'flex';
-  }
-  document.getElementById('dateInput').value = new Date().toISOString().slice(0,10);
+  if (isIOS && !window.navigator.standalone) document.getElementById("installBanner").style.display = "flex";
+  document.getElementById("dateInput").value = new Date().toISOString().slice(0,10);
+  renderCropBtns();
   renderRecent();
   renderRecommend();
 };
 
+function renderCropBtns() {
+  document.getElementById("cropBtns").innerHTML = CROPS.map(c =>
+    `<button class="crop-btn ${c===selectedCrop?"active":""}" onclick="selectCrop('${c}')">${c}</button>`
+  ).join("");
+}
+function selectCrop(c) { selectedCrop=c; renderCropBtns(); checkWarning(); renderRecent(); }
+
 function showTab(tab) {
-  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active',['record','history','recommend'][i]===tab));
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-'+tab).classList.add('active');
-  if (tab==='history') renderHistory();
-  if (tab==='recommend') renderRecommend();
+  document.querySelectorAll(".tab").forEach((t,i) => t.classList.toggle("active",["record","history","recommend"][i]===tab));
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById("tab-"+tab).classList.add("active");
+  if (tab==="history") renderHistory();
+  if (tab==="recommend") renderRecommend();
 }
 
 function handleNameInput(val) {
-  matchedItem = null;
-  document.getElementById('matchedBox').style.display='none';
-  document.getElementById('saveBtn').disabled = !val;
+  document.getElementById("saveBtn").disabled = !val.trim();
   hideWarning();
-  if (!val || val.length < 1) { document.getElementById('suggestBox').style.display='none'; return; }
-  
+
+  if (!val || val.length < 1) {
+    document.getElementById("suggestBox").style.display = "none";
+    document.getElementById("matchedBox").style.display = "none";
+    matchedItem = null;
+    return;
+  }
+
+  // DB에서 자동 매칭
+  const exact = PESTICIDE_DB.find(p => p.name === val.trim());
+  if (exact) {
+    matchedItem = exact;
+    showMatched(exact);
+    document.getElementById("suggestBox").style.display = "none";
+    checkWarning();
+    return;
+  }
+
+  // 자동완성 목록
   const hits = PESTICIDE_DB.filter(p => p.name.includes(val) || val.includes(p.name)).slice(0,10);
-  const box = document.getElementById('suggestBox');
-  if (!hits.length) { box.style.display='none'; return; }
-  
-  const isNew = (d) => d >= '2022-01-01';
-  box.innerHTML = hits.map((p,i) => {
-    const newBadge = isNew(p.date) ? '<span class="suggest-new">NEW</span>' : '';
-    return \`<div class="suggest-item" onclick="selectPesticide(\${i},\${JSON.stringify(hits).replace(/"/g,'&quot;')})">
-      <span class="suggest-code">\${p.code}</span>
-      <div class="suggest-name">\${p.name} \${newBadge}</div>
-      <div class="suggest-sub">\${p.ingr} · \${p.targets.join(', ')}</div>
-      <div class="suggest-date">등록일 \${p.date}</div>
-    </div>\`;
-  }).join('');
+  const box = document.getElementById("suggestBox");
+  if (!hits.length) { box.style.display="none"; return; }
+
   box._hits = hits;
-  box.style.display = 'block';
+  box.innerHTML = hits.map((p,i) => {
+    const isFresh = p.date >= "2024-01-01";
+    const isNew = p.date >= "2022-01-01";
+    const typeTag = p.type==="살균"
+      ? `<span class="fun-tag">살균</span>`
+      : `<span class="ins-tag">살충</span>`;
+    return `<div class="suggest-item" onclick="selectSuggest(${i})">
+      <span class="suggest-code">${p.code}</span>
+      <div class="suggest-name">${typeTag}${p.name}${isFresh?" 🆕":isNew?" ✨":""}</div>
+      <div class="suggest-sub">${p.ingr}</div>
+      <div class="suggest-sub">${p.targets.join(" · ")} · 등록 ${p.date}</div>
+    </div>`;
+  }).join("");
+  box.style.display = "block";
 }
 
-function selectPesticide(i, hits) {
-  const p = document.getElementById('suggestBox')._hits[i];
+function selectSuggest(i) {
+  const p = document.getElementById("suggestBox")._hits[i];
   matchedItem = p;
-  document.getElementById('nameInput').value = p.name;
-  document.getElementById('suggestBox').style.display = 'none';
-  document.getElementById('saveBtn').disabled = false;
-  const isNew = p.date >= '2022-01-01';
-  document.getElementById('matchedBox').innerHTML = \`
-    <div class="tag"><div class="tag-label">기작코드</div><div class="tag-value" style="color:#58a6ff">\${p.code}</div></div>
-    <div class="tag"><div class="tag-label">계통</div><div class="tag-value" style="color:#a78bfa">\${getGroup(p.code)}</div></div>
-    <div class="tag"><div class="tag-label">등록일</div><div class="tag-value" style="color:\${isNew?'#4ade80':'#8b949e'}">\${p.date}\${isNew?' 🆕':''}</div></div>
-    <div class="tag"><div class="tag-label">대상병해충</div><div class="tag-value" style="color:#e6edf3;font-size:11px">\${p.targets.join(', ')}</div></div>
-  \`;
-  document.getElementById('matchedBox').style.display = 'flex';
+  document.getElementById("nameInput").value = p.name;
+  document.getElementById("suggestBox").style.display = "none";
+  document.getElementById("saveBtn").disabled = false;
+  showMatched(p);
   checkWarning();
+}
+
+function showMatched(p) {
+  const isFresh = p.date >= "2024-01-01";
+  const isNew = p.date >= "2022-01-01";
+  const typeColor = p.type==="살균" ? "#4ade80" : "#f59e0b";
+  const typeBg = p.type==="살균" ? "#1a3a1a" : "#2a1f0a";
+  document.getElementById("matchedBox").innerHTML = `
+    <div class="tag">
+      <div class="tag-label">구분</div>
+      <div class="tag-value" style="color:${typeColor};background:${typeBg};padding:2px 6px;border-radius:4px">${p.type==="살균"?"🍄 살균제":"🐛 살충제"}</div>
+    </div>
+    <div class="tag">
+      <div class="tag-label">기작코드</div>
+      <div class="tag-value" style="color:#58a6ff">${p.code}</div>
+    </div>
+    <div class="tag">
+      <div class="tag-label">계통</div>
+      <div class="tag-value" style="color:#a78bfa;font-size:11px">${getGroup(p.code)}</div>
+    </div>
+    <div class="tag">
+      <div class="tag-label">등록일</div>
+      <div class="tag-value" style="color:${isFresh?"#4ade80":isNew?"#f59e0b":"#8b949e"}">${p.date}${isFresh?" 🆕":""}</div>
+    </div>
+    <div class="tag">
+      <div class="tag-label">방제대상</div>
+      <div class="tag-value" style="color:#e6edf3;font-size:11px">${p.targets.join(", ")}</div>
+    </div>
+  `;
+  document.getElementById("matchedBox").style.display = "flex";
 }
 
 function checkWarning() {
   if (!matchedItem) { hideWarning(); return; }
   const myGroup = getGroup(matchedItem.code);
-  const prev = records.filter(r => {
-    if (r.crop !== selectedCrop) return false;
-    return getGroup(r.code) === myGroup;
-  });
+  const prev = records.filter(r => r.crop === selectedCrop && getGroup(r.code) === myGroup);
   if (prev.length >= 1) {
-    const prevNames = [...new Set(prev.map(r=>r.name))].slice(0,3).join(', ');
+    const prevNames = [...new Set(prev.map(r=>r.name))].slice(0,3).join(", ");
     showWarning(
-      \`⚠️ 교차저항 위험! (\${prev.length+1}회 연속)\`,
-      \`\${myGroup} 계통 — 이전 사용: \${prevNames}\`,
-      '같은 계통 약제는 교차저항 발생! 다른 기작으로 교체하세요.'
+      `⚠️ 교차저항 위험! (${prev.length+1}회 연속)`,
+      `${myGroup} 계통 — 이전 사용: ${prevNames}`,
+      "같은 계통 약제는 교차저항 발생! 다른 기작으로 교체하세요."
     );
   } else hideWarning();
 }
 
 function showWarning(t,t2,t3) {
-  document.getElementById('warningBox').style.display='flex';
-  document.getElementById('warningTitle').textContent=t;
-  document.getElementById('warningText').textContent=t2;
-  document.getElementById('warningText2').textContent=t3;
+  document.getElementById("warningBox").style.display="flex";
+  document.getElementById("warningTitle").textContent=t;
+  document.getElementById("warningText").textContent=t2;
+  document.getElementById("warningText2").textContent=t3;
 }
-function hideWarning() { document.getElementById('warningBox').style.display='none'; }
+function hideWarning() { document.getElementById("warningBox").style.display="none"; }
 
 function saveRecord() {
-  const name = document.getElementById('nameInput').value.trim();
+  const name = document.getElementById("nameInput").value.trim();
   if (!name) return;
-  const p = matchedItem || PESTICIDE_DB.find(x => x.name === name);
-  const rec = {
-    id: Date.now(), name, crop: selectedCrop,
-    date: document.getElementById('dateInput').value,
-    target: document.getElementById('targetInput').value,
-    code: p?.code||'미상', ingr: p?.ingr||'',
-    type: p?.type||'', regDate: p?.date||''
-  };
-  records.unshift(rec);
-  localStorage.setItem('farm_records', JSON.stringify(records));
-  document.getElementById('nameInput').value='';
-  document.getElementById('targetInput').value='';
-  document.getElementById('matchedBox').style.display='none';
-  document.getElementById('saveBtn').disabled=true;
-  matchedItem=null; hideWarning(); renderRecent();
-  alert('✅ 저장되었습니다!');
-}
 
-function renderRecent() {
-  const el = document.getElementById('recentRecords');
-  if (!records.length) { el.innerHTML=''; return; }
-  el.innerHTML = '<div class="label" style="margin-bottom:8px">최근 기록</div>' + records.slice(0,3).map(r=>recordHtml(r)).join('');
+  // DB에서 자동 매칭 (직접 입력해도 저장 가능)
+  const p = matchedItem || PESTICIDE_DB.find(x => x.name === name) || {
+    name, code:"미상", ingr:"", type:"", date:"", targets:[]
+  };
+
+  const rec = {
+    id: Date.now(),
+    name: p.name,
+    crop: selectedCrop,
+    date: document.getElementById("dateInput").value,
+    target: document.getElementById("targetInput").value,
+    code: p.code,
+    ingr: p.ingr,
+    type: p.type,
+    regDate: p.date,
+    targets: p.targets || []
+  };
+
+  records.unshift(rec);
+  localStorage.setItem("farm_records", JSON.stringify(records));
+
+  // 초기화
+  document.getElementById("nameInput").value = "";
+  document.getElementById("targetInput").value = "";
+  document.getElementById("matchedBox").style.display = "none";
+  document.getElementById("saveBtn").disabled = true;
+  matchedItem = null;
+  hideWarning();
+  renderRecent();
+  renderRecommend();
+  alert("✅ 저장되었습니다!");
 }
 
 function recordHtml(r, compact=false) {
-  const isNew = r.regDate >= '2022-01-01';
-  return \`<div class="record-card">
+  const isFresh = r.regDate >= "2024-01-01";
+  const isNew = r.regDate >= "2022-01-01";
+  const typeLabel = r.type==="살균" ? `<span style="font-size:10px;color:#4ade80;background:#1a3a1a;padding:1px 5px;border-radius:4px;margin-left:3px">살균</span>`
+    : r.type==="살충" ? `<span style="font-size:10px;color:#f59e0b;background:#2a1f0a;padding:1px 5px;border-radius:4px;margin-left:3px">살충</span>` : "";
+  return `<div class="record-card">
     <div style="flex:1;min-width:0">
-      <div class="record-name">\${r.name}\${isNew?'<span class="new-badge">NEW</span>':''}</div>
-      \${!compact?\`<div class="record-sub">\${r.crop} · \${r.target||'방제대상 미입력'}</div>\`:''}
-      \${r.ingr?\`<div class="record-sub">\${r.ingr}</div>\`:''}
-      <div class="record-sub">\${r.date}</div>
+      <div class="record-name">${r.name}${typeLabel}${isFresh?`<span style="font-size:10px;color:#58a6ff;background:#1a2332;padding:1px 5px;border-radius:4px;margin-left:3px">2024+</span>`:""}</div>
+      ${!compact?`<div class="record-sub">${r.crop} · ${r.target||"방제대상 미입력"}</div>`:""}
+      ${r.ingr?`<div class="record-sub">${r.ingr}</div>`:""}
+      <div class="record-sub">${r.date}</div>
     </div>
     <div style="text-align:right;flex-shrink:0">
-      \${r.code&&r.code!=='미상'?\`<div class="record-code">\${r.code}</div>\`:''}
-      <div style="font-size:10px;color:#8b949e">\${getGroup(r.code)}</div>
+      <div class="record-code">${r.code}</div>
+      <div style="font-size:10px;color:#8b949e">${getGroup(r.code)}</div>
     </div>
-  </div>\`;
+  </div>`;
+}
+
+function renderRecent() {
+  const el = document.getElementById("recentRecords");
+  const cropRecs = records.filter(r => r.crop === selectedCrop);
+  if (!cropRecs.length) { el.innerHTML=`<div style="text-align:center;color:#8b949e;padding:20px;font-size:13px">${selectedCrop} 기록이 없습니다</div>`; return; }
+  el.innerHTML = `<div class="label" style="margin-bottom:8px">${selectedCrop} 최근 기록</div>` +
+    cropRecs.slice(0,3).map(r => recordHtml(r)).join("");
 }
 
 function renderHistory() {
-  const search = document.getElementById('searchInput')?.value||'';
-  const el = document.getElementById('historyContent');
-  if (!records.length) { el.innerHTML='<div class="empty">아직 기록이 없습니다.</div>'; return; }
+  const search = document.getElementById("searchInput")?.value||"";
+  const el = document.getElementById("historyContent");
+  if (!records.length) { el.innerHTML=`<div class="empty">아직 기록이 없습니다.</div>`; return; }
+
   const cr = records.filter(r => !search || r.name.includes(search) || r.code.includes(search));
-  if (!cr.length) { el.innerHTML='<div class="empty">검색 결과 없음</div>'; return; }
-  
-  // 기작별 카운트
-  const cgc={};
-  cr.forEach(r => { const g=getGroup(r.code); cgc[g]=(cgc[g]||0)+1; });
-  const dangers = Object.entries(cgc).filter(([,v])=>v>=2);
-  
-  let html = '';
-  if (dangers.length) {
-    html += \`<div style="background:#2d1010;border:1px solid #f87171;border-radius:10px;padding:10px 14px;margin-bottom:12px">
+  if (!cr.length) { el.innerHTML=`<div class="empty">검색 결과 없음</div>`; return; }
+
+  const funRecs = cr.filter(r => r.type==="살균");
+  const insRecs = cr.filter(r => r.type==="살충");
+  const cgcFun={}, cgcIns={};
+  funRecs.forEach(r => { const g=getGroup(r.code); cgcFun[g]=(cgcFun[g]||0)+1; });
+  insRecs.forEach(r => { const g=getGroup(r.code); cgcIns[g]=(cgcIns[g]||0)+1; });
+
+  let html = "";
+  const allDangers = [...Object.entries(cgcFun),...Object.entries(cgcIns)].filter(([,v])=>v>=2);
+  if (allDangers.length) {
+    html += `<div style="background:#2d1010;border:1px solid #f87171;border-radius:10px;padding:10px 14px;margin-bottom:12px">
       <div style="color:#f87171;font-weight:700;font-size:13px;margin-bottom:6px">⚠️ 교차저항 위험 계통</div>
-      \${dangers.map(([g,cnt])=>\`<div style="font-size:12px;color:#fca5a5;margin-bottom:3px">• \${g} — \${cnt}회 사용</div>\`).join('')}</div>\`;
+      ${allDangers.map(([g,cnt])=>`<div style="font-size:12px;color:#fca5a5;margin-bottom:3px">• ${g} — ${cnt}회</div>`).join("")}
+    </div>`;
   }
-  
-  Object.entries(cgc).sort((a,b)=>b[1]-a[1]).forEach(([group,cnt]) => {
-    const color = cnt>=2?'#f87171':'#58a6ff';
-    html += \`<div class="bar-row">
-      <div class="bar-label" title="\${group}">\${group.split('(')[0]}</div>
-      <div class="bar-bg"><div class="bar-fill" style="width:\${Math.min(cnt*20,100)}%;background:\${color}"></div></div>
-      <div style="font-size:12px;color:\${color};width:24px">\${cnt}회</div>
-    </div>\`;
-  });
-  
-  html += '<div style="margin-top:12px">';
-  cr.slice(0,20).forEach(r => { html += recordHtml(r, true); });
-  if (cr.length>20) html += \`<div style="text-align:center;color:#8b949e;font-size:12px;margin-top:6px">+\${cr.length-20}건 더</div>\`;
-  html += '</div>';
+
+  if (funRecs.length) {
+    html += `<div class="section-title" style="color:#4ade80;background:#1a3a1a">🍄 살균제 이력</div>`;
+    Object.entries(cgcFun).sort((a,b)=>b[1]-a[1]).forEach(([g,cnt]) => {
+      const color = cnt>=2?"#f87171":"#4ade80";
+      html += `<div class="bar-row"><div class="bar-label">${g.split("(")[0]}</div><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(cnt*20,100)}%;background:${color}"></div></div><div style="font-size:12px;color:${color};width:24px">${cnt}회</div></div>`;
+    });
+    funRecs.slice(0,5).forEach(r => { html += recordHtml(r,true); });
+    if(funRecs.length>5) html += `<div style="text-align:center;color:#8b949e;font-size:12px;margin-top:4px">+${funRecs.length-5}건 더</div>`;
+  }
+
+  if (insRecs.length) {
+    html += `<div class="section-title" style="color:#f59e0b;background:#2a1f0a;margin-top:12px">🐛 살충제 이력</div>`;
+    Object.entries(cgcIns).sort((a,b)=>b[1]-a[1]).forEach(([g,cnt]) => {
+      const color = cnt>=2?"#f87171":"#f59e0b";
+      html += `<div class="bar-row"><div class="bar-label">${g.split("(")[0]}</div><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(cnt*20,100)}%;background:${color}"></div></div><div style="font-size:12px;color:${color};width:24px">${cnt}회</div></div>`;
+    });
+    insRecs.slice(0,5).forEach(r => { html += recordHtml(r,true); });
+    if(insRecs.length>5) html += `<div style="text-align:center;color:#8b949e;font-size:12px;margin-top:4px">+${insRecs.length-5}건 더</div>`;
+  }
+
   el.innerHTML = html;
 }
 
 function setRecFilter(f) {
   recFilter = f;
-  document.querySelectorAll('.filter-btn').forEach((b,i) => b.classList.toggle('active',['all','fungicide','insecticide','new'][i]===f));
+  document.querySelectorAll(".filter-btn").forEach((b,i) => b.classList.toggle("active",["all","fun","ins","new"][i]===f));
   renderRecommend();
 }
 
 function renderRecommend() {
-  const el = document.getElementById('recommendContent');
+  const el = document.getElementById("recommendContent");
   const usedGroups = {};
-  records.forEach(r => { const g=getGroup(r.code); usedGroups[g]=(usedGroups[g]||0)+1; });
-  
+  records.filter(r=>r.crop===selectedCrop).forEach(r => { const g=getGroup(r.code); usedGroups[g]=(usedGroups[g]||0)+1; });
+
   let filtered = [...PESTICIDE_DB];
-  if (recFilter==='fungicide') filtered = filtered.filter(p=>p.type==='살균');
-  else if (recFilter==='insecticide') filtered = filtered.filter(p=>p.type==='살충');
-  else if (recFilter==='new') filtered = filtered.filter(p=>p.date>='2022-01-01');
-  
-  // 점수 계산: 미사용기작 + 신약 우선
+  if (recFilter==="fun") filtered = filtered.filter(p=>p.type==="살균");
+  else if (recFilter==="ins") filtered = filtered.filter(p=>p.type==="살충");
+  else if (recFilter==="new") filtered = filtered.filter(p=>p.date>="2022-01-01");
+
   const scored = filtered.map(p => {
     const g = getGroup(p.code);
     const used = usedGroups[g] || 0;
-    const isNew = p.date >= '2022-01-01' ? 1 : 0;
-    const isFresh = p.date >= '2024-01-01' ? 1 : 0;
-    const score = (used===0?100:used===1?50:0) + isNew*30 + isFresh*20;
-    return {...p, score, used, group: g};
+    const score = (used===0?100:used===1?50:10) + (p.date>="2024-01-01"?20:p.date>="2022-01-01"?10:0);
+    return {...p, score, used, group:g};
   }).sort((a,b) => b.score-a.score || b.date.localeCompare(a.date));
-  
-  // 상위 30개만 표시
-  const top = scored.slice(0,30);
-  
-  if (!top.length) { el.innerHTML='<div class="empty">결과 없음</div>'; return; }
-  
-  let html = '';
-  top.forEach(p => {
-    const bc = p.used===0?'#1f3a5f':p.used>=2?'#3d1a1a':'#21262d';
-    const tc = p.used===0?'#58a6ff':p.used>=2?'#f87171':'#fbbf24';
-    const badge = p.used===0?'✅ 미사용':p.used>=2?'⚠️ 주의':'사용중';
-    const isNew = p.date >= '2022-01-01';
-    const isFresh = p.date >= '2024-01-01';
-    html += \`<div class="rec-card" style="border:1px solid \${bc}">
-      <div style="flex:1;min-width:0">
-        <div style="font-size:14px;font-weight:700;margin-bottom:3px">
-          \${p.name}
-          \${isFresh?'<span style="font-size:10px;color:#4ade80;background:#1a3a1a;padding:1px 5px;border-radius:4px;margin-left:4px">2024+</span>':
-            isNew?'<span style="font-size:10px;color:#f59e0b;background:#2a2010;padding:1px 5px;border-radius:4px;margin-left:4px">NEW</span>':''
-          }
-        </div>
-        <div style="font-size:11px;color:#8b949e">\${p.ingr}</div>
-        <div style="font-size:11px;color:#6e7681;margin-top:2px">\${p.targets.join(' · ')}</div>
-      </div>
-      <div style="text-align:right;flex-shrink:0;margin-left:8px">
-        <div style="font-size:11px;background:#1a2332;color:#58a6ff;padding:2px 7px;border-radius:8px;margin-bottom:3px">\${p.code}</div>
-        <div style="font-size:10px;color:\${tc}">\${badge}</div>
-        <div style="font-size:10px;color:#6e7681">\${p.used}회 사용</div>
-      </div>
-    </div>\`;
+
+  // 기작 그룹별 대표 1개씩만
+  const seen = new Set();
+  const top = scored.filter(p => {
+    const key = p.type+"_"+p.group;
+    if (seen.has(key)) return false;
+    seen.add(key); return true;
   });
-  
-  html += \`<div class="guide-box">
-    <div style="font-weight:700;margin-bottom:8px">📌 교차저항 로테이션 원칙</div>
-    \${['같은 계통 약제는 상표명 달라도 교차저항 발생','동일 계통 연속 2회 이상 사용 금지','신약(2022↑) 활용으로 저항성 관리','M계(무기황·동제) 혼용으로 저항성 억제'].map((t,i)=>
-      \`<div style="display:flex;gap:8px;margin-bottom:5px;font-size:12px;color:#8b949e"><span style="color:#58a6ff">\${i+1}.</span><span>\${t}</span></div>\`
-    ).join('')}\`
-  html += '</div>';
-  
+
+  const funList = top.filter(p=>p.type==="살균");
+  const insList = top.filter(p=>p.type==="살충");
+
+  let html = "";
+
+  if (funList.length && recFilter !== "ins") {
+    html += `<div class="section-title" style="color:#4ade80;background:#1a3a1a">🍄 살균제 추천 (기작 중복 없이)</div>`;
+    funList.slice(0,10).forEach(p => { html += recCardHtml(p); });
+  }
+
+  if (insList.length && recFilter !== "fun") {
+    html += `<div class="section-title" style="color:#f59e0b;background:#2a1f0a;margin-top:12px">🐛 살충제 추천 (기작 중복 없이)</div>`;
+    insList.slice(0,10).forEach(p => { html += recCardHtml(p); });
+  }
+
+  html += `<div class="guide-box">
+    <div style="font-weight:700;margin-bottom:8px">📌 로테이션 원칙</div>
+    ${["같은 계통은 상표명 달라도 교차저항 발생","동일 계통 연속 2회 이상 사용 금지","신약(2022↑) 활용으로 저항성 관리","M계(무기황·동제) 혼용으로 저항성 억제"].map((t,i)=>
+      `<div style="display:flex;gap:8px;margin-bottom:5px;font-size:12px;color:#8b949e"><span style="color:#58a6ff">${i+1}.</span><span>${t}</span></div>`
+    ).join("")}
+  </div>`;
+
   el.innerHTML = html;
 }
 
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.pos-rel')) document.getElementById('suggestBox').style.display='none';
+function recCardHtml(p) {
+  const bc = p.used===0?"#1f3a5f":p.used>=2?"#3d1a1a":"#21262d";
+  const tc = p.used===0?"#58a6ff":p.used>=2?"#f87171":"#fbbf24";
+  const badge = p.used===0?"✅ 미사용":p.used>=2?"⚠️ 교체필요":"사용중";
+  const isFresh = p.date >= "2024-01-01";
+  const isNew = p.date >= "2022-01-01";
+  return `<div class="rec-card" style="border:1px solid ${bc}">
+    <div style="flex:1;min-width:0">
+      <div style="font-size:14px;font-weight:700;margin-bottom:3px">
+        ${p.name}
+        ${isFresh?`<span style="font-size:10px;color:#4ade80;background:#1a3a1a;padding:1px 5px;border-radius:4px;margin-left:3px">2024+</span>`:
+          isNew?`<span style="font-size:10px;color:#f59e0b;background:#2a1f0a;padding:1px 5px;border-radius:4px;margin-left:3px">NEW</span>`:""}
+      </div>
+      <div style="font-size:11px;color:#8b949e">${p.ingr}</div>
+      <div style="font-size:11px;color:#6e7681;margin-top:2px">${p.targets.join(" · ")}</div>
+    </div>
+    <div style="text-align:right;flex-shrink:0;margin-left:8px">
+      <div style="font-size:11px;background:#1a2332;color:#58a6ff;padding:2px 7px;border-radius:8px;margin-bottom:3px">${p.code}</div>
+      <div style="font-size:10px;color:${tc}">${badge}</div>
+      <div style="font-size:10px;color:#6e7681">${p.used}회 사용</div>
+    </div>
+  </div>`;
+}
+
+document.addEventListener("click", function(e) {
+  if (!e.target.closest(".pos-rel")) document.getElementById("suggestBox").style.display="none";
 });
 </script>
 </body>
