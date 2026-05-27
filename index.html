@@ -47,9 +47,11 @@ input:focus { outline: none; border-color: #58a6ff; }
 .tag-value { font-size: 12px; font-weight: 700; }
 .btn-save { width: 100%; padding: 13px; background: linear-gradient(135deg,#1d4ed8,#2563eb); color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 12px; }
 .btn-save:disabled { background: #21262d; color: #6e7681; cursor: default; }
-.warning { background: linear-gradient(135deg,#3d1a1a,#2d1010); border: 1px solid #f87171; border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; display: flex; gap: 10px; }
-.warning-title { color: #f87171; font-weight: 700; font-size: 14px; }
-.warning-text { color: #fca5a5; font-size: 12px; margin-top: 2px; }
+.warning { border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; display: flex; gap: 10px; }
+.warning.danger { background: linear-gradient(135deg,#3d1a1a,#2d1010); border: 2px solid #f87171; }
+.warning.caution { background: linear-gradient(135deg,#3d2a0a,#2d1f05); border: 2px solid #f59e0b; }
+.warning-title { font-weight: 700; font-size: 14px; }
+.warning-text { font-size: 12px; margin-top: 2px; }
 .record-card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 10px 12px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
 .record-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
 .record-sub { font-size: 11px; color: #8b949e; }
@@ -65,6 +67,8 @@ input:focus { outline: none; border-color: #58a6ff; }
 .bar-bg { flex: 1; background: #21262d; border-radius: 4px; height: 13px; overflow: hidden; }
 .bar-fill { height: 100%; border-radius: 4px; }
 .rec-card { background: #0d1117; border-radius: 8px; padding: 10px 12px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
+.pest-section { background: #161b22; border: 1px solid #21262d; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
+.pest-title { font-size: 13px; font-weight: 700; color: #e6edf3; margin-bottom: 8px; }
 </style>
 </head>
 <body>
@@ -100,14 +104,7 @@ input:focus { outline: none; border-color: #58a6ff; }
 </div>
 
 <div id="tab-record" class="page active">
-  <div id="warningBox" style="display:none" class="warning">
-    <div style="font-size:20px">⚠️</div>
-    <div>
-      <div class="warning-title" id="warningTitle"></div>
-      <div class="warning-text" id="warningText"></div>
-      <div class="warning-text" id="warningText2"></div>
-    </div>
-  </div>
+  <div id="warningBox" style="display:none"></div>
   <div class="card">
     <div class="label">🌾 작물 선택</div>
     <div class="crop-btns" id="cropBtns"></div>
@@ -133,13 +130,12 @@ input:focus { outline: none; border-color: #58a6ff; }
 
 <div id="tab-recommend" class="page">
   <div style="background:#161b22;border:1px solid #21262d;border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#8b949e">
-    💡 사용 이력 기반 <span style="color:#58a6ff;font-weight:600">미사용 기작 우선</span> + <span style="color:#4ade80;font-weight:600">신약 우선</span> 상품명 추천
+    💡 최근 사용한 병해충 기준으로 <span style="color:#58a6ff;font-weight:600">다음 약제</span>를 추천합니다
   </div>
   <div class="filter-btns">
     <button class="filter-btn active" onclick="setRecFilter('all')">전체</button>
     <button class="filter-btn" onclick="setRecFilter('fun')">🍄 살균제</button>
     <button class="filter-btn" onclick="setRecFilter('ins')">🐛 살충제</button>
-    <button class="filter-btn" onclick="setRecFilter('new')">🆕 신약</button>
   </div>
   <div id="recommendContent"></div>
 </div>
@@ -2515,6 +2511,25 @@ const CODE_GROUPS = {
   "가1":"페닐아미드계","나3":"에타복삼계","다5":"플루아지남계","카":"다작용점계"
 };
 
+// 병해충 그룹 (같은 그룹끼리 교차저항 체크)
+const PEST_GROUPS = {
+  "꽃노랑총채벌레": "총채벌레류",
+  "대만총채벌레": "총채벌레류",
+  "목화진딧물": "진딧물류",
+  "조팝나무진딧물": "진딧물류",
+  "사과혹진딧물": "진딧물류",
+  "점박이응애": "응애류",
+  "사과응애": "응애류",
+  "담배가루이": "가루이류",
+  "온실가루이": "가루이류",
+  "흰가루병": "흰가루병",
+  "잿빛곰팡이병": "잿빛곰팡이병",
+  "노균병": "노균병",
+  "탄저병": "탄저병",
+  "갈색무늬병": "갈색무늬병",
+  "점무늬낙엽병": "점무늬낙엽병",
+};
+
 function getGroup(code) {
   if (!code || code === "미상") return "미분류";
   for (const [key, val] of Object.entries(CODE_GROUPS)) {
@@ -2592,14 +2607,12 @@ function showTab(tab) {
 function handleNameInput(val) {
   document.getElementById("saveBtn").disabled = !val.trim();
   hideWarning();
-
   if (!val || val.length < 1) {
     document.getElementById("suggestBox").style.display = "none";
     document.getElementById("matchedBox").style.display = "none";
     matchedItem = null;
     return;
   }
-
   const cropDB = PESTICIDE_DB.filter(p => p.crop === selectedCrop);
   const exact = cropDB.find(p => p.name === val.trim());
   if (exact) {
@@ -2609,21 +2622,17 @@ function handleNameInput(val) {
     checkWarning();
     return;
   }
-
   const hits = cropDB.filter(p => p.name.includes(val) || val.includes(p.name)).slice(0,10);
   const box = document.getElementById("suggestBox");
   if (!hits.length) { box.style.display="none"; return; }
-
   box._hits = hits;
   box.innerHTML = hits.map((p,i) => {
-    const isFresh = p.date >= "2024-01-01";
-    const isNew = p.date >= "2022-01-01";
     const typeTag = p.type==="살균" ? `<span class="fun-tag">살균</span>` : `<span class="ins-tag">살충</span>`;
     return `<div class="suggest-item" onclick="selectSuggest(${i})">
       <span class="suggest-code">${p.code}</span>
-      <div class="suggest-name">${typeTag}${p.name}${isFresh?" 🆕":isNew?" ✨":""}</div>
+      <div class="suggest-name">${typeTag}${p.name}</div>
       <div class="suggest-sub">${p.ingr}</div>
-      <div class="suggest-sub">${p.targets.join(" · ")} · 등록 ${p.date}</div>
+      <div class="suggest-sub">${p.targets.join(" · ")}</div>
     </div>`;
   }).join("");
   box.style.display = "block";
@@ -2640,15 +2649,12 @@ function selectSuggest(i) {
 }
 
 function showMatched(p) {
-  const isFresh = p.date >= "2024-01-01";
-  const isNew = p.date >= "2022-01-01";
   const typeColor = p.type==="살균" ? "#4ade80" : "#f59e0b";
   const typeBg = p.type==="살균" ? "#1a3a1a" : "#2a1f0a";
   document.getElementById("matchedBox").innerHTML = `
     <div class="tag"><div class="tag-label">구분</div><div class="tag-value" style="color:${typeColor};background:${typeBg};padding:2px 6px;border-radius:4px">${p.type==="살균"?"🍄 살균제":"🐛 살충제"}</div></div>
     <div class="tag"><div class="tag-label">기작코드</div><div class="tag-value" style="color:#58a6ff">${p.code}</div></div>
     <div class="tag"><div class="tag-label">계통</div><div class="tag-value" style="color:#a78bfa;font-size:11px">${getGroup(p.code)}</div></div>
-    <div class="tag"><div class="tag-label">등록일</div><div class="tag-value" style="color:${isFresh?"#4ade80":isNew?"#f59e0b":"#8b949e"}">${p.date}${isFresh?" 🆕":""}</div></div>
     <div class="tag"><div class="tag-label">방제대상</div><div class="tag-value" style="color:#e6edf3;font-size:11px">${p.targets.join(", ")}</div></div>
   `;
   document.getElementById("matchedBox").style.display = "flex";
@@ -2657,24 +2663,52 @@ function showMatched(p) {
 function checkWarning() {
   if (!matchedItem) { hideWarning(); return; }
   const myGroup = getGroup(matchedItem.code);
-  const prev = records.filter(r => r.crop === selectedCrop && getGroup(r.code) === myGroup);
-  if (prev.length >= 1) {
-    const prevNames = [...new Set(prev.map(r=>r.name))].slice(0,3).join(", ");
-    showWarning(
-      `⚠️ 교차저항 위험! (${prev.length+1}회 연속)`,
-      `${myGroup} 계통 — 이전 사용: ${prevNames}`,
-      "같은 계통 약제는 교차저항 발생! 다른 기작으로 교체하세요."
+  const cropRecs = records.filter(r => r.crop === selectedCrop);
+
+  // 완전히 같은 약제 중복 입력
+  const sameItem = cropRecs.filter(r => r.name === matchedItem.name);
+  if (sameItem.length >= 1) {
+    const lastDate = sameItem[0].date;
+    showWarning("danger",
+      `🚫 동일 약제 중복 사용!`,
+      `${matchedItem.name}은 ${lastDate}에 이미 사용했습니다.`,
+      "같은 약제 반복 사용은 저항성을 높입니다. 다른 약제를 선택하세요!"
     );
-  } else hideWarning();
+    return;
+  }
+
+  // 같은 기작 연속 사용
+  const sameGroup = cropRecs.filter(r => getGroup(r.code) === myGroup);
+  if (sameGroup.length >= 1) {
+    const prevNames = [...new Set(sameGroup.map(r=>r.name))].slice(0,2).join(", ");
+    showWarning("caution",
+      `⚠️ 교차저항 위험! (같은 계통 ${sameGroup.length+1}회)`,
+      `${myGroup} 계통 — 이전 사용: ${prevNames}`,
+      "계통이 같으면 상표명이 달라도 교차저항이 발생합니다!"
+    );
+    return;
+  }
+  hideWarning();
 }
 
-function showWarning(t,t2,t3) {
-  document.getElementById("warningBox").style.display="flex";
-  document.getElementById("warningTitle").textContent=t;
-  document.getElementById("warningText").textContent=t2;
-  document.getElementById("warningText2").textContent=t3;
+function showWarning(type, t, t2, t3) {
+  const box = document.getElementById("warningBox");
+  const titleColor = type==="danger" ? "#f87171" : "#f59e0b";
+  const textColor = type==="danger" ? "#fca5a5" : "#fcd34d";
+  box.className = `warning ${type}`;
+  box.innerHTML = `
+    <div style="font-size:22px">${type==="danger"?"🚫":"⚠️"}</div>
+    <div>
+      <div class="warning-title" style="color:${titleColor}">${t}</div>
+      <div class="warning-text" style="color:${textColor}">${t2}</div>
+      <div class="warning-text" style="color:${textColor}">${t3}</div>
+    </div>`;
+  box.style.display = "flex";
 }
-function hideWarning() { document.getElementById("warningBox").style.display="none"; }
+function hideWarning() {
+  const box = document.getElementById("warningBox");
+  box.style.display = "none";
+}
 
 function saveRecord() {
   const name = document.getElementById("nameInput").value.trim();
@@ -2701,14 +2735,13 @@ function saveRecord() {
 }
 
 function recordHtml(r, compact=false) {
-  const isFresh = r.regDate >= "2024-01-01";
   const typeLabel = r.type==="살균"
     ? `<span style="font-size:10px;color:#4ade80;background:#1a3a1a;padding:1px 5px;border-radius:4px;margin-left:3px">살균</span>`
     : r.type==="살충"
     ? `<span style="font-size:10px;color:#f59e0b;background:#2a1f0a;padding:1px 5px;border-radius:4px;margin-left:3px">살충</span>` : "";
   return `<div class="record-card">
     <div style="flex:1;min-width:0">
-      <div class="record-name">${r.name}${typeLabel}${isFresh?`<span style="font-size:10px;color:#58a6ff;background:#1a2332;padding:1px 5px;border-radius:4px;margin-left:3px">2024+</span>`:""}</div>
+      <div class="record-name">${r.name}${typeLabel}</div>
       ${!compact?`<div class="record-sub">${r.crop} · ${r.target||"방제대상 미입력"}</div>`:""}
       ${r.ingr?`<div class="record-sub">${r.ingr}</div>`:""}
       <div class="record-sub">${r.date}</div>
@@ -2778,53 +2811,87 @@ function renderHistory() {
 
 function setRecFilter(f) {
   recFilter = f;
-  document.querySelectorAll(".filter-btn").forEach((b,i) => b.classList.toggle("active",["all","fun","ins","new"][i]===f));
+  document.querySelectorAll(".filter-btn").forEach((b,i) => b.classList.toggle("active",["all","fun","ins"][i]===f));
   renderRecommend();
 }
 
 function renderRecommend() {
   const el = document.getElementById("recommendContent");
+  const cropRecs = records.filter(r => r.crop === selectedCrop);
+  const cropDB = PESTICIDE_DB.filter(p => p.crop === selectedCrop);
+
+  // 사용한 기작 그룹
   const usedGroups = {};
-  records.filter(r=>r.crop===selectedCrop).forEach(r => { const g=getGroup(r.code); usedGroups[g]=(usedGroups[g]||0)+1; });
+  cropRecs.forEach(r => { const g=getGroup(r.code); usedGroups[g]=(usedGroups[g]||0)+1; });
 
-  let filtered = PESTICIDE_DB.filter(p => p.crop === selectedCrop);
-  if (recFilter==="fun") filtered = filtered.filter(p=>p.type==="살균");
-  else if (recFilter==="ins") filtered = filtered.filter(p=>p.type==="살충");
-  else if (recFilter==="new") filtered = filtered.filter(p=>p.date>="2022-01-01");
-
-  const scored = filtered.map(p => {
-    const g = getGroup(p.code);
-    const used = usedGroups[g] || 0;
-    const score = (used===0?100:used===1?50:10) + (p.date>="2024-01-01"?20:p.date>="2022-01-01"?10:0);
-    return {...p, score, used, group:g};
-  }).sort((a,b) => b.score-a.score || b.date.localeCompare(a.date));
-
-  // 기작 그룹별 대표 1개씩
-  const seen = new Set();
-  const top = scored.filter(p => {
-    const key = p.type+"_"+p.group;
-    if (seen.has(key)) return false;
-    seen.add(key); return true;
+  // 최근 사용한 병해충 목록 추출
+  const usedPests = new Set();
+  cropRecs.forEach(r => {
+    if (r.targets) r.targets.forEach(t => usedPests.add(t));
+    if (r.target) r.target.split(/[,·]/).map(t=>t.trim()).filter(Boolean).forEach(t => usedPests.add(t));
   });
 
-  const funList = top.filter(p=>p.type==="살균");
-  const insList = top.filter(p=>p.type==="살충");
+  // 병해충별 그룹
+  const pestGroupMap = {};
+  usedPests.forEach(pest => {
+    const group = PEST_GROUPS[pest] || pest;
+    if (!pestGroupMap[group]) pestGroupMap[group] = [];
+    pestGroupMap[group].push(pest);
+  });
 
   let html = "";
 
-  if (funList.length && recFilter !== "ins") {
-    html += `<div class="section-title" style="color:#4ade80;background:#1a3a1a">🍄 살균제 추천 (기작 중복 없이)</div>`;
-    funList.slice(0,12).forEach(p => { html += recCardHtml(p); });
-  }
+  if (cropRecs.length === 0) {
+    // 기록 없으면 전체 추천
+    html += renderGeneralRecommend(cropDB, usedGroups);
+  } else {
+    // 병해충별 다음 약제 추천
+    const pestGroups = Object.keys(pestGroupMap);
+    if (pestGroups.length > 0) {
+      pestGroups.forEach(pg => {
+        const pests = pestGroupMap[pg];
+        // 해당 병해충에 효과있는 DB 필터
+        let candidates = cropDB.filter(p => {
+          if (recFilter==="fun" && p.type!=="살균") return false;
+          if (recFilter==="ins" && p.type!=="살충") return false;
+          return p.targets.some(t => pests.includes(t) || t.includes(pg));
+        });
 
-  if (insList.length && recFilter !== "fun") {
-    html += `<div class="section-title" style="color:#f59e0b;background:#2a1f0a;margin-top:12px">🐛 살충제 추천 (기작 중복 없이)</div>`;
-    insList.slice(0,12).forEach(p => { html += recCardHtml(p); });
+        // 점수 계산
+        const scored = candidates.map(p => {
+          const g = getGroup(p.code);
+          const used = usedGroups[g] || 0;
+          const score = (used===0?100:used===1?50:5) + (p.date>="2024-01-01"?20:p.date>="2022-01-01"?10:0);
+          return {...p, score, used, group:g};
+        }).sort((a,b) => b.score-a.score || b.date.localeCompare(a.date));
+
+        // 기작 중복 제거
+        const seen = new Set();
+        const top = scored.filter(p => {
+          const key = p.type+"_"+p.group;
+          if (seen.has(key)) return false;
+          seen.add(key); return true;
+        }).slice(0,6);
+
+        if (!top.length) return;
+
+        const isFun = top[0]?.type === "살균";
+        const titleColor = isFun ? "#4ade80" : "#f59e0b";
+        const titleBg = isFun ? "#1a3a1a" : "#2a1f0a";
+
+        html += `<div class="pest-section">
+          <div class="pest-title">🎯 ${pg} 다음 추천 약제</div>`;
+        top.forEach(p => { html += recCardHtml(p, usedGroups); });
+        html += `</div>`;
+      });
+    } else {
+      html += renderGeneralRecommend(cropDB, usedGroups);
+    }
   }
 
   html += `<div class="guide-box">
     <div style="font-weight:700;margin-bottom:8px">📌 로테이션 원칙</div>
-    ${["같은 계통은 상표명 달라도 교차저항 발생","동일 계통 연속 2회 이상 사용 금지","신약(2022↑) 활용으로 저항성 관리","M계(무기황·동제) 혼용으로 저항성 억제"].map((t,i)=>
+    ${["같은 계통은 상표명 달라도 교차저항 발생","동일 약제 반복 사용 절대 금지","신약 활용으로 저항성 관리","M계(무기황·동제) 혼용으로 저항성 억제"].map((t,i)=>
       `<div style="display:flex;gap:8px;margin-bottom:5px;font-size:12px;color:#8b949e"><span style="color:#58a6ff">${i+1}.</span><span>${t}</span></div>`
     ).join("")}
   </div>`;
@@ -2832,24 +2899,57 @@ function renderRecommend() {
   el.innerHTML = html;
 }
 
-function recCardHtml(p) {
-  const bc = p.used===0?"#1f3a5f":p.used>=2?"#3d1a1a":"#21262d";
-  const tc = p.used===0?"#58a6ff":p.used>=2?"#f87171":"#fbbf24";
-  const badge = p.used===0?"✅ 미사용":p.used>=2?"⚠️ 교체필요":"사용중";
-  const isFresh = p.date >= "2024-01-01";
-  const isNew = p.date >= "2022-01-01";
+function renderGeneralRecommend(cropDB, usedGroups) {
+  let filtered = [...cropDB];
+  if (recFilter==="fun") filtered = filtered.filter(p=>p.type==="살균");
+  else if (recFilter==="ins") filtered = filtered.filter(p=>p.type==="살충");
+
+  const scored = filtered.map(p => {
+    const g = getGroup(p.code);
+    const used = usedGroups[g] || 0;
+    const score = (used===0?100:used===1?50:5) + (p.date>="2024-01-01"?20:p.date>="2022-01-01"?10:0);
+    return {...p, score, used, group:g};
+  }).sort((a,b) => b.score-a.score || b.date.localeCompare(a.date));
+
+  const seen = new Set();
+  const top = scored.filter(p => {
+    const key = p.type+"_"+p.group;
+    if (seen.has(key)) return false;
+    seen.add(key); return true;
+  });
+
+  const funList = top.filter(p=>p.type==="살균").slice(0,10);
+  const insList = top.filter(p=>p.type==="살충").slice(0,10);
+
+  let html = "";
+  if (funList.length && recFilter !== "ins") {
+    html += `<div class="section-title" style="color:#4ade80;background:#1a3a1a">🍄 살균제 추천</div>`;
+    funList.forEach(p => { html += recCardHtml(p, usedGroups); });
+  }
+  if (insList.length && recFilter !== "fun") {
+    html += `<div class="section-title" style="color:#f59e0b;background:#2a1f0a;margin-top:12px">🐛 살충제 추천</div>`;
+    insList.forEach(p => { html += recCardHtml(p, usedGroups); });
+  }
+  return html;
+}
+
+function recCardHtml(p, usedGroups) {
+  const used = usedGroups ? (usedGroups[getGroup(p.code)] || 0) : (p.used || 0);
+  const bc = used===0?"#1f3a5f":used>=2?"#3d1a1a":"#21262d";
+  const tc = used===0?"#58a6ff":used>=2?"#f87171":"#fbbf24";
+  const badge = used===0?"✅ 미사용":used>=2?"⚠️ 교체필요":"사용중";
+  const typeLabel = p.type==="살균"
+    ? `<span style="font-size:10px;color:#4ade80;background:#1a3a1a;padding:1px 4px;border-radius:3px;margin-right:3px">살균</span>`
+    : `<span style="font-size:10px;color:#f59e0b;background:#2a1f0a;padding:1px 4px;border-radius:3px;margin-right:3px">살충</span>`;
   return `<div class="rec-card" style="border:1px solid ${bc}">
     <div style="flex:1;min-width:0">
-      <div style="font-size:14px;font-weight:700;margin-bottom:3px">
-        ${p.name}${isFresh?`<span style="font-size:10px;color:#4ade80;background:#1a3a1a;padding:1px 5px;border-radius:4px;margin-left:3px">2024+</span>`:isNew?`<span style="font-size:10px;color:#f59e0b;background:#2a1f0a;padding:1px 5px;border-radius:4px;margin-left:3px">NEW</span>`:""}
-      </div>
+      <div style="font-size:14px;font-weight:700;margin-bottom:3px">${typeLabel}${p.name}</div>
       <div style="font-size:11px;color:#8b949e">${p.ingr}</div>
       <div style="font-size:11px;color:#6e7681;margin-top:2px">${p.targets.join(" · ")}</div>
     </div>
     <div style="text-align:right;flex-shrink:0;margin-left:8px">
       <div style="font-size:11px;background:#1a2332;color:#58a6ff;padding:2px 7px;border-radius:8px;margin-bottom:3px">${p.code}</div>
       <div style="font-size:10px;color:${tc}">${badge}</div>
-      <div style="font-size:10px;color:#6e7681">${p.used}회 사용</div>
     </div>
   </div>`;
 }
