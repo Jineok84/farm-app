@@ -113,7 +113,6 @@ input:focus { outline: none; border-color: #58a6ff; }
 </div>
 
 <div id="tab-record" class="page active">
-  <div id="warningBox" style="display:none"></div>
   <div class="card">
     <div class="label">🌾 작물 선택 <span style="font-size:10px;color:#6e7681;font-weight:400">(길게 누르면 순서 변경)</span></div>
     <div class="crop-btns" id="cropBtns"></div>
@@ -125,6 +124,7 @@ input:focus { outline: none; border-color: #58a6ff; }
       <div class="suggest-box" id="suggestBox" style="display:none"></div>
     </div>
     <div id="matchedBox" class="matched-box" style="display:none"></div>
+    <div id="warningBox" style="display:none;margin-top:8px"></div>
     <div class="label">🎯 방제 대상</div>
     <input type="text" id="targetInput" placeholder="예: 흰가루병, 총채벌레">
     <button class="btn-save" id="saveBtn" onclick="saveRecord()" disabled>✅ 기록 저장</button>
