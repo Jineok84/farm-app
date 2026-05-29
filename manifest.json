@@ -1,18 +1,25 @@
 {
-  "name": "스마트 농약관리",
-  "short_name": "농약관리",
-  "description": "농진청 등록 데이터 기반 농약 기작 로테이션 관리",
-  "start_url": "/farm-app/",
-  "display": "standalone",
   "background_color": "#0d1117",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "스마트 농약관리",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "스마트 농약관리",
+  "start_url": "/",
   "theme_color": "#0d1117",
-  "orientation": "portrait",
   "icons": [
     {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "src": "https://jineok84.github.io/icon-512.png",
+      "isSquare": false,
+      "isPng": true,
+      "isWebp": false,
+      "isJpg": false,
+      "width": 0,
+      "is512x512": false,
+      "is256x256": false,
+      "is192x192": false
     }
-  ]
+  ],
+  "description": "농진청 등록 데이터 기반 농약 기작 로테이션 관리 앱"
 }
