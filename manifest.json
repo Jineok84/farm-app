@@ -10,7 +10,7 @@
   "theme_color": "#0d1117",
   "icons": [
     {
-      "src": "https://jineok84.github.io/icon-512.png",
+      "src": "icon-512.svg",
       "isSquare": false,
       "isPng": true,
       "isWebp": false,
