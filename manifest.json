@@ -6,7 +6,7 @@
   "orientation": "any",
   "scope": "/",
   "short_name": "스마트 농약관리",
-  "start_url": "/",
+  "start_url": "/farm-app/"
   "theme_color": "#0d1117",
   "icons": [
     {
