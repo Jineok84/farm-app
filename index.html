@@ -14347,18 +14347,18 @@ function typeLabel(r) {
 function recordHtml(r,compact=false) {
   return `<div class="record-card">
     <div style="flex:1;min-width:0">
-      <div class="record-name">${r.name}${typeLabel(r)}</div>
+      <div class="record-name" style="display:flex;align-items:center;flex-wrap:wrap;gap:5px">
+        <span>${r.name}</span>${typeLabel(r)}
+        <span style="font-size:11px;background:#1a2332;color:#58a6ff;padding:2px 8px;border-radius:10px">${r.code}</span>
+      </div>
+      <div style="font-size:10px;color:#8b949e;margin-top:2px">${getGroup(r.code)}</div>
       ${!compact?`<div class="record-sub">${r.crop} · ${r.target||"방제대상 미입력"}</div>`:""}
       ${r.ingr?`<div class="record-sub">${r.ingr}</div>`:""}
       <div class="record-sub">${r.date}</div>
-      <div class="record-actions">
-        <button class="btn-edit" onclick="openEdit(${r.id})">✏️ 수정</button>
-        <button class="btn-del" onclick="deleteRecord(${r.id})">🗑️ 삭제</button>
-      </div>
     </div>
-    <div style="text-align:right;flex-shrink:0">
-      <div class="record-code">${r.code}</div>
-      <div style="font-size:10px;color:#8b949e">${getGroup(r.code)}</div>
+    <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0;margin-left:8px">
+      <button style="padding:7px 12px;background:#1f3a5f;color:#58a6ff;border:1px solid #58a6ff;border-radius:8px;font-size:12px;cursor:pointer;font-weight:600" onclick="openEdit(${r.id})">✏️ 수정</button>
+      <button style="padding:7px 12px;background:#3d1a1a;color:#f87171;border:1px solid #f87171;border-radius:8px;font-size:12px;cursor:pointer;font-weight:600" onclick="deleteRecord(${r.id})">🗑️ 삭제</button>
     </div>
   </div>`;
 }
