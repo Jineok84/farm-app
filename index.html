@@ -14005,6 +14005,10 @@ let cropOrder = JSON.parse(localStorage.getItem("farm_cropOrder") || "null") || 
 // 혹시 새 작물 추가되면 누락분 보충
 DEFAULT_CROPS.forEach(c => { if (!cropOrder.includes(c)) cropOrder.push(c); });
 
+// 기존 기록 마이그레이션 (farm_records4 → farm_records5)
+if (!localStorage.getItem("farm_records5") && localStorage.getItem("farm_records4")) {
+  localStorage.setItem("farm_records5", localStorage.getItem("farm_records4"));
+}
 let records = JSON.parse(localStorage.getItem("farm_records5")||"[]");
 let selectedCrop = localStorage.getItem("farm_lastCrop") || cropOrder[0];
 if (!cropOrder.includes(selectedCrop)) selectedCrop = cropOrder[0];
