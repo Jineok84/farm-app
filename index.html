@@ -14169,6 +14169,7 @@ window.onload = function() {
   document.getElementById("dateInput").value = new Date().toISOString().slice(0,10);
   renderCropBtns();
   updateCountLabel();
+  addDrugRow();
   renderRecent();
   renderRecommend();
 };
@@ -14179,7 +14180,7 @@ function selectCrop(c) {
   document.getElementById("suggestBox").style.display="none";
   document.getElementById("matchedBox").style.display="none";
   document.getElementById("saveBtn").disabled=true;
-  matchedItem=null; hideWarning(); renderRecent(); renderRecommend();
+  matchedItem=null; hideWarning(); drugRows=[]; addDrugRow(); renderRecent(); renderRecommend();
 }
 
 function showTab(tab) {
@@ -14446,8 +14447,187 @@ function recCardHtml(p,usedGroups){
   return `<div class="rec-card" style="border:1px solid ${bc}"><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700;margin-bottom:3px">${tl}${p.name}</div><div style="font-size:11px;color:#8b949e">${p.ingr}</div><div style="font-size:11px;color:#6e7681;margin-top:2px">${p.targets.join(" · ")}</div></div><div style="text-align:right;flex-shrink:0;margin-left:8px"><div style="font-size:11px;background:#1a2332;color:#58a6ff;padding:2px 7px;border-radius:8px;margin-bottom:3px">${p.code}</div><div style="font-size:10px;color:${tc}">${badge}</div></div></div>`;
 }
 
+// ── 다중 약제 입력 ──
+let drugRows = [];
+
+function addDrugRow() {
+  const id = Date.now();
+  drugRows.push({id, matchedItem: null});
+  renderDrugList();
+  // 새로 추가된 행 입력창에 포커스
+  setTimeout(() => {
+    const inp = document.getElementById("drugName_" + id);
+    if (inp) inp.focus();
+  }, 100);
+}
+
+function removeDrugRow(id) {
+  drugRows = drugRows.filter(r => r.id !== id);
+  renderDrugList();
+}
+
+function renderDrugList() {
+  const el = document.getElementById("drugList");
+  if (drugRows.length === 0) {
+    // 기본 1개 행
+    addDrugRow();
+    return;
+  }
+  el.innerHTML = drugRows.map((row, idx) => `
+    <div style="background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:10px;margin-bottom:8px" id="drugRow_${row.id}">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+        <span style="font-size:12px;color:#8b949e;font-weight:600">${idx+1}번 약제</span>
+        ${drugRows.length > 1 ? `<button onclick="removeDrugRow(${row.id})" style="margin-left:auto;background:#3d1a1a;color:#f87171;border:1px solid #f87171;border-radius:6px;padding:2px 8px;font-size:11px;cursor:pointer">✕ 삭제</button>` : ""}
+      </div>
+      <div class="pos-rel">
+        <input type="text" id="drugName_${row.id}" placeholder="상표명 입력" 
+          oninput="handleDrugInput(${row.id}, this.value)" 
+          autocomplete="off"
+          style="width:100%;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:9px 12px;color:#e6edf3;font-size:14px"
+          value="${row.matchedItem ? row.matchedItem.name : ""}">
+        <div class="suggest-box" id="drugSuggest_${row.id}" style="display:none"></div>
+      </div>
+      <div id="drugMatched_${row.id}" style="display:none;margin-top:6px"></div>
+      <div id="drugWarn_${row.id}" style="display:none;margin-top:6px"></div>
+    </div>
+  `).join("");
+}
+
+function handleDrugInput(rowId, val) {
+  const row = drugRows.find(r => r.id === rowId);
+  if (!row) return;
+  row.matchedItem = null;
+  document.getElementById("drugMatched_" + rowId).style.display = "none";
+  document.getElementById("drugWarn_" + rowId).style.display = "none";
+
+  if (!val) { document.getElementById("drugSuggest_" + rowId).style.display = "none"; return; }
+
+  const cropDB = PESTICIDE_DB.filter(p => p.crop === selectedCrop);
+  const exact = cropDB.find(p => p.name === val.trim());
+  if (exact) {
+    row.matchedItem = exact;
+    showDrugMatched(rowId, exact);
+    document.getElementById("drugSuggest_" + rowId).style.display = "none";
+    checkDrugWarning(rowId, exact);
+    return;
+  }
+
+  const hits = cropDB.filter(p => p.name.includes(val) || val.includes(p.name)).slice(0, 8);
+  const box = document.getElementById("drugSuggest_" + rowId);
+  if (!hits.length) { box.style.display = "none"; return; }
+  box._hits = hits;
+  box.innerHTML = hits.map((p, i) => `<div class="suggest-item" onclick="selectDrugSuggest(${rowId}, ${i})">
+    <span class="suggest-code">${p.code}</span>
+    <div class="suggest-name">${p.type==="살균"?'<span class="fun-tag">살균</span>':'<span class="ins-tag">살충</span>'}${p.name}</div>
+    <div class="suggest-sub">${p.ingr}</div>
+    <div class="suggest-sub">${p.targets.join(" · ")}</div>
+  </div>`).join("");
+  box.style.display = "block";
+}
+
+function selectDrugSuggest(rowId, i) {
+  const box = document.getElementById("drugSuggest_" + rowId);
+  const p = box._hits[i];
+  const row = drugRows.find(r => r.id === rowId);
+  if (!row) return;
+  row.matchedItem = p;
+  document.getElementById("drugName_" + rowId).value = p.name;
+  box.style.display = "none";
+  showDrugMatched(rowId, p);
+  checkDrugWarning(rowId, p);
+}
+
+function showDrugMatched(rowId, p) {
+  const tc = p.type==="살균" ? "#4ade80" : "#f59e0b";
+  const tb = p.type==="살균" ? "#1a3a1a" : "#2a1f0a";
+  const el = document.getElementById("drugMatched_" + rowId);
+  el.innerHTML = `<div style="background:#1a2332;border:1px solid #21262d;border-radius:8px;padding:8px 10px;display:flex;gap:10px;flex-wrap:wrap">
+    <div class="tag"><div class="tag-label">구분</div><div class="tag-value" style="color:${tc};background:${tb};padding:1px 5px;border-radius:4px">${p.type==="살균"?"🍄 살균제":"🐛 살충제"}</div></div>
+    <div class="tag"><div class="tag-label">기작</div><div class="tag-value" style="color:#58a6ff">${p.code}</div></div>
+    <div class="tag"><div class="tag-label">계통</div><div class="tag-value" style="color:#a78bfa;font-size:11px">${getGroup(p.code)}</div></div>
+  </div>`;
+  el.style.display = "block";
+}
+
+function checkDrugWarning(rowId, item) {
+  const myGroups = getGroups(item.code).filter(g => g !== "미분류");
+  const cropRecs = records.filter(r => r.crop === selectedCrop);
+  const sorted = [...cropRecs].sort((a,b) => new Date(b.date) - new Date(a.date));
+  const warnEl = document.getElementById("drugWarn_" + rowId);
+
+  // 동일 약제 중복
+  if (cropRecs.some(r => r.name === item.name)) {
+    warnEl.innerHTML = `<div style="background:#2d1010;border:1px solid #f87171;border-radius:8px;padding:8px 10px;font-size:12px;color:#fca5a5">🚫 동일 약제 이미 사용함! 다른 약제 선택 권장</div>`;
+    warnEl.style.display = "block";
+    return;
+  }
+
+  // 교차저항
+  for (const myGroup of myGroups) {
+    let consecutive = 0;
+    for (const r of sorted) {
+      if (getGroups(r.code).includes(myGroup)) consecutive++;
+      else break;
+    }
+    if (consecutive >= 2) {
+      warnEl.innerHTML = `<div style="background:#2a1f05;border:1px solid #f59e0b;border-radius:8px;padding:8px 10px;font-size:12px;color:#fcd34d">⚠️ ${myGroup} 계통 연속 사용 주의!</div>`;
+      warnEl.style.display = "block";
+      return;
+    }
+  }
+  warnEl.style.display = "none";
+}
+
+function saveAllRecords() {
+  const date = document.getElementById("dateInput").value;
+  const target = document.getElementById("targetInput").value;
+  let savedCount = 0;
+
+  drugRows.forEach(row => {
+    const nameEl = document.getElementById("drugName_" + row.id);
+    const name = nameEl ? nameEl.value.trim() : "";
+    if (!name) return;
+
+    const cropDB = PESTICIDE_DB.filter(p => p.crop === selectedCrop);
+    const p = row.matchedItem || cropDB.find(x => x.name === name) || {name, code:"미상", ingr:"", type:"", date:"", targets:[]};
+
+    records.unshift({
+      id: Date.now() + savedCount,
+      name: p.name, crop: selectedCrop, date,
+      target, code: p.code, ingr: p.ingr,
+      type: p.type, regDate: p.date, targets: p.targets||[]
+    });
+    savedCount++;
+  });
+
+  if (savedCount === 0) return;
+
+  save();
+  // 초기화
+  drugRows = [];
+  renderDrugList();
+  document.getElementById("targetInput").value = "";
+  hideWarning();
+  renderRecent();
+  renderRecommend();
+
+  // 토스트
+  const toast = document.getElementById("toastMsg");
+  toast.textContent = `✅ ${savedCount}개 약제 저장완료!`;
+  toast.style.display = "block";
+  toast.style.opacity = "1";
+  setTimeout(() => { toast.style.opacity = "0"; setTimeout(() => { toast.style.display = "none"; }, 400); }, 1500);
+}
+
 document.addEventListener("click",function(e){
-  if(!e.target.closest(".pos-rel")){document.getElementById("suggestBox").style.display="none";document.getElementById("editSuggestBox").style.display="none";}
+  if(!e.target.closest(".pos-rel")){
+    document.getElementById("suggestBox").style.display="none";
+    document.getElementById("editSuggestBox").style.display="none";
+    drugRows.forEach(row => {
+      const box = document.getElementById("drugSuggest_" + row.id);
+      if (box) box.style.display = "none";
+    });
+  }
 });
 </script>
 </body>
