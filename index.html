@@ -120,7 +120,7 @@ input:focus { outline: none; border-color: #58a6ff; }
     <input type="date" id="dateInput">
     <div class="label">💊 농약 입력 <span id="countLabel" style="font-size:10px;color:#4ade80;font-weight:400"></span></div>
     <div class="pos-rel">
-      <input type="text" id="nameInput" placeholder="약제 입력 (여러개: 캡틴, 오티바, 코니도)" oninput="handleNameInput(this.value)" autocomplete="off">
+      <input type="text" id="nameInput" placeholder="약제 입력 (여러개: 캡틴, 오티바, 코니도)" oninput="handleNameInput(this.value)" onkeydown="if(event.key==='Enter'){document.getElementById('suggestBox').style.display='none';document.getElementById('targetInput').focus();}" autocomplete="off">
       <div class="suggest-box" id="suggestBox" style="display:none"></div>
     </div>
     <div id="matchedBox" class="matched-box" style="display:none"></div>
