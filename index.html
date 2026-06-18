@@ -14194,14 +14194,35 @@ function handleNameInput(val) {
   document.getElementById("saveBtn").disabled=!val.trim();
   hideWarning();
   if(!val){document.getElementById("suggestBox").style.display="none";document.getElementById("matchedBox").style.display="none";matchedItem=null;return;}
+
+  const parts = val.split(",");
+  const lastPart = parts[parts.length-1].trim();
+
+  // 콤마 직후 마지막이 비어있으면 자동완성 닫기
+  if(parts.length > 1 && lastPart === "") {
+    document.getElementById("suggestBox").style.display="none";
+    document.getElementById("matchedBox").style.display="none";
+    matchedItem=null;
+    return;
+  }
+
+  const searchVal = lastPart || val.trim();
   const cropDB=PESTICIDE_DB.filter(p=>p.crop===selectedCrop);
-  const exact=cropDB.find(p=>p.name===val.trim());
-  if(exact){matchedItem=exact;showMatched(exact,"matchedBox");document.getElementById("suggestBox").style.display="none";checkWarning();return;}
-  const hits=cropDB.filter(p=>p.name.includes(val)||val.includes(p.name)).slice(0,10);
+
+  // 단일 입력일때만 exact 매칭 표시
+  if(parts.length === 1) {
+    const exact=cropDB.find(p=>p.name===val.trim());
+    if(exact){matchedItem=exact;showMatched(exact,"matchedBox");document.getElementById("suggestBox").style.display="none";checkWarning();return;}
+  } else {
+    document.getElementById("matchedBox").style.display="none";
+    matchedItem=null;
+  }
+
+  const hits=cropDB.filter(p=>p.name.includes(searchVal)||searchVal.includes(p.name)).slice(0,8);
   const box=document.getElementById("suggestBox");
-  if(!hits.length){box.style.display="none";return;}
+  if(!hits.length||!searchVal){box.style.display="none";return;}
   box._hits=hits;
-  box.innerHTML=hits.map((p,i)=>`<div class="suggest-item" onclick="selectSuggest(${i})">
+  box.innerHTML=hits.map((p,i)=>`<div class="suggest-item" onclick="selectSuggest(${i},${parts.length})">
     <span class="suggest-code">${p.code}</span>
     <div class="suggest-name">${p.type==="살균"?'<span class="fun-tag">살균</span>':'<span class="ins-tag">살충</span>'}${p.name}</div>
     <div class="suggest-sub">${p.ingr}</div>
@@ -14210,12 +14231,25 @@ function handleNameInput(val) {
   box.style.display="block";
 }
 
-function selectSuggest(i) {
+function selectSuggest(i, partCount) {
   const p=document.getElementById("suggestBox")._hits[i];
-  matchedItem=p;document.getElementById("nameInput").value=p.name;
+  const currentVal = document.getElementById("nameInput").value;
+  if(partCount > 1) {
+    // 여러개 입력 중 - 마지막 부분만 교체
+    const parts = currentVal.split(",");
+    parts[parts.length-1] = p.name;
+    document.getElementById("nameInput").value = parts.join(",");
+    document.getElementById("matchedBox").style.display="none";
+    matchedItem=null;
+  } else {
+    // 단일 입력
+    matchedItem=p;
+    document.getElementById("nameInput").value=p.name;
+    showMatched(p,"matchedBox");
+    checkWarning();
+  }
   document.getElementById("suggestBox").style.display="none";
   document.getElementById("saveBtn").disabled=false;
-  showMatched(p,"matchedBox");checkWarning();
 }
 
 function handleEditInput(val) {
