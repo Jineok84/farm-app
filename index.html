@@ -14297,18 +14297,38 @@ function showWarning(type,t,t2,t3) {
 function hideWarning(){document.getElementById("warningBox").style.display="none";}
 
 function saveRecord() {
-  const name=document.getElementById("nameInput").value.trim();
-  if(!name) return;
-  const cropDB=PESTICIDE_DB.filter(p=>p.crop===selectedCrop);
-  const p=matchedItem||cropDB.find(x=>x.name===name)||{name,code:"미상",ingr:"",type:"",date:"",targets:[]};
-  records.unshift({id:Date.now(),name:p.name,crop:selectedCrop,date:document.getElementById("dateInput").value,target:document.getElementById("targetInput").value,code:p.code,ingr:p.ingr,type:p.type,regDate:p.date,targets:p.targets||[]});
+  const val = document.getElementById("nameInput").value.trim();
+  if(!val) return;
+  const date = document.getElementById("dateInput").value;
+  const target = document.getElementById("targetInput").value;
+  const cropDB = PESTICIDE_DB.filter(p=>p.crop===selectedCrop);
+
+  // 콤마로 분리해서 여러 약제 처리
+  const names = val.split(",").map(n=>n.trim()).filter(Boolean);
+  let savedCount = 0;
+
+  names.forEach((name, idx) => {
+    const p = (names.length===1 && matchedItem)
+      ? matchedItem
+      : cropDB.find(x=>x.name===name) || {name,code:"미상",ingr:"",type:"",date:"",targets:[]};
+    records.unshift({
+      id: Date.now()+idx,
+      name:p.name, crop:selectedCrop, date, target,
+      code:p.code, ingr:p.ingr, type:p.type, regDate:p.date, targets:p.targets||[]
+    });
+    savedCount++;
+  });
+
   save();
-  document.getElementById("nameInput").value="";document.getElementById("targetInput").value="";
+  document.getElementById("nameInput").value="";
+  document.getElementById("targetInput").value="";
   document.getElementById("matchedBox").style.display="none";
   document.getElementById("saveBtn").disabled=true;
-  matchedItem=null;hideWarning();renderRecent();renderRecommend();
+  matchedItem=null; hideWarning(); renderRecent(); renderRecommend();
+
   const toast=document.getElementById("toastMsg");
-  toast.style.display="block";toast.style.opacity="1";
+  toast.textContent = savedCount > 1 ? `✅ ${savedCount}개 약제 저장완료!` : "✅ 저장완료!";
+  toast.style.display="block"; toast.style.opacity="1";
   setTimeout(()=>{toast.style.opacity="0";setTimeout(()=>{toast.style.display="none";},400);},1500);
   document.getElementById("nameInput").focus();
 }
